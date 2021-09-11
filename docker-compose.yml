@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  web:
+    container_name: ctr-book-board
+    build:
+      context: .
+    image: img-book-board
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 3000:3000
+    command:
+      - ./cmd.sh

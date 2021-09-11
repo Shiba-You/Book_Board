@@ -2,17 +2,20 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Header from './components/header'
 import Content from './components/content'
-import useSWR from 'swr'
+
+// SWR（api操作） の使い方チュートリアル
+// import useSWR from 'swr'
 
 // import Styles from '../styles/Home.module.css'
 
 export default function Home() {
   const title = "Home"
 
-  const fetcher = url => fetch(url).then(r => r.json())
-  const {data, error} = useSWR('/api/message', fetcher)
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  // SWR（api操作） の使い方チュートリアル
+  // const fetcher = url => fetch(url).then(r => r.json())
+  // const {data, error} = useSWR('/api/message', fetcher)
+  // if (error) return <div>failed to load</div>
+  // if (!data) return <div>loading...</div>
 
   return (
     <Content>
@@ -20,10 +23,14 @@ export default function Home() {
         <title>{ title }</title>
       </Head>
       <Header title= { title } />
-      <p>{data.message}</p>
-      <Link href={`/about/`}>
+      <Link href={`/login/`}>
         <button>
-          Aboutへ
+          Loginへ
+        </button>
+      </Link>
+      <Link href={`/signup/`}>
+        <button>
+          Signupへ
         </button>
       </Link>
       <style jsx>{`
