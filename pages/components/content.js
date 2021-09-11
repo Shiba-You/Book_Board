@@ -1,7 +1,7 @@
 export default function Content({ children }) {
   return (
     <>
-      <div classname="container">
+      <div className="container">
         { children }
       </div>
       <hr />
