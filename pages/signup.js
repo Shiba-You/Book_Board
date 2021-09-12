@@ -1,8 +1,5 @@
 import { useState } from "react";
-import Link from 'next/link';
 import firebase from './api/firebase';
-import auth from './api/firebase';
-// import styles from "../styles/Home.module.css";
 
 export default function Signup() {
   const [mailAddress, setMailAddress] = useState('a.y.chocola2921@gmail.com');
@@ -37,15 +34,13 @@ export default function Signup() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <Link href={`/signup/`}>
-        <button
-          onClick = {() => {
-            createAccount(mailAddress, password)
-          }}
-        >
-          新規作成
-        </button>
-      </Link>
+      <button
+        onClick = {() => {
+          createAccount(mailAddress, password)
+        }}
+      >
+        新規作成
+      </button>
     </>
   );
 };

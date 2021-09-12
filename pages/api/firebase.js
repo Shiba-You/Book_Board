@@ -1,13 +1,13 @@
 import firebase from "firebase";
 
-const firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-  measurementId: process.env.measurementId
+export const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_apiKey,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_authDomain,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_projectId,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_storageBucket,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_messagingSenderId,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_appId,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_measurementId
 };
 
 if (firebase.apps.length === 0) {

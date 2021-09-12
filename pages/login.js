@@ -1,10 +1,25 @@
 import { useState } from "react";
-import Link from 'next/link'
-// import styles from "../styles/Home.module.css";
+import { useRouter } from "next/router";
+import firebase from './api/firebase';
 
 export default function Login() {
-  const [mailAddress, setMailAddress] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
+  const [mailAddress, setMailAddress] = useState("a.y.chocola2921@gmail.com");
+  const [password, setPassword] = useState("Taiyou2921");
+
+  const login = async (mailAddress, password) => {
+    try {
+      await firebase
+        .auth().
+        signInWithEmailAndPassword(mailAddress, password);
+      router.push({
+        pathname: "/mypage",
+        query: { mailAddress },
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   return (
     <>
@@ -24,16 +39,16 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <Link href={`/signup/`}>
-        <button>
-          初めてのご利用はこちらから
-        </button>
-      </Link>
-      <Link href={`/`}>
-        <button>
-          ログイン
-        </button>
-      </Link>
+      <button
+        onClick={() => router.push({ pathname: "/signup"})}
+      >
+        初めてのご利用はこちらから
+      </button>
+      <button
+        onClick={() => login(mailAddress, password)}
+      >
+        ログイン
+      </button>
     </>
   );
 };
