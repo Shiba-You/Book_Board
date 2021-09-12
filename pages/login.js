@@ -10,8 +10,8 @@ export default function Login() {
   const login = async (mailAddress, password) => {
     try {
       await firebase
-        .auth().
-        signInWithEmailAndPassword(mailAddress, password);
+        .auth()
+        .signInWithEmailAndPassword(mailAddress, password);
       router.push({
         pathname: "/mypage",
         query: { mailAddress },
