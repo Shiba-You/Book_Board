@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import Header from './components/header'
-import Content from './components/content'
+import Header from '../components/header'
 
 export default function Home() {
   const title = "Home"
 
   return (
-    <Content>
+    <>
       <Head>
         <title>{ title }</title>
       </Head>
@@ -22,6 +21,6 @@ export default function Home() {
           Signupへ
         </button>
       </Link>
-    </Content>
+    </>
   )
 }

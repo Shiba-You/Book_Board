@@ -1,0 +1,12 @@
+import styles from '../styles/Footer.module.css'
+
+export default function Footer() {
+  return (
+    <>
+      <hr />
+      <footer className={styles.footer}>
+        ©️Shiba-You
+      </footer>
+    </>
+  );
+}
