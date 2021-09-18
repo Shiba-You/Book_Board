@@ -1,27 +1,17 @@
 import Router, { useRouter } from "next/router";
 
 import Layout from '../components/template/layout'
-import { logout } from "../utils/auth";
 
 export default function Mypage(props) {
-  const router = useRouter();
+  // const router = useRouter();
+  const { email } = props
 
   const title = "Mypage";
 
-  const onLogout = async () => {
-    await logout();
-    router.push('/login');
-  }
-
   return(
   <>
-    <Layout title={title}>
+    <Layout title={title} email={email}>
       <p>Mypage</p>
-      <button
-        onClick={onLogout}
-      >
-        ログアウト
-      </button>
     </Layout>
   </>
   );
