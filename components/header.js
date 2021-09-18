@@ -20,7 +20,7 @@ export default function Header() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar variant="dense">
           <Typography variant="h6" color="inherit">
             Book Board
