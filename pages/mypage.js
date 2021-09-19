@@ -1,10 +1,22 @@
 import Router, { useRouter } from "next/router";
+import { parseCookies } from "nookies";
 
-import Layout from '../components/template/layout'
+import firebase from '../pages/api/firebase';
+import Layout from '../components/template/layout';
 
 export default function Mypage(props) {
   // const router = useRouter();
-  const { email } = props
+
+  const { email, result } = props
+  const user = firebase.auth().currentUser
+  console.log(user)
+  console.log(user.email)
+  console.log(user.uid)
+  console.log(user.password)
+  // const user = firebase
+  //               .auth()
+  //               .signInWithCustomToken(token);
+  // console.log(user)
 
   const title = "Mypage";
 
@@ -33,7 +45,10 @@ Mypage.getInitialProps = async ({ req, res }) => {
       res.end();
     }
 
-    return { email: (json.user || {}).email || "" };
+    return { 
+      email: (json.user || {}).email || "",
+      token: json
+    };
   }
 
   if (!isServerSide) {
@@ -42,9 +57,15 @@ Mypage.getInitialProps = async ({ req, res }) => {
    
     if (!json.user) Router.push({pathname: "/login"});
 
-    return { email: (json.user || {}).email || "" };
+    return { 
+      email: (json.user || {}).email || "",
+      token: json
+    };
   }
 
-  return { email: "" };
+  return { 
+    email: "",
+    token: json
+  };
 
 };

@@ -12,5 +12,6 @@ export default async function meApi(req, res) {
     .verifySessionCookie(sessionId, true)
     .catch(() => null);
 
-  res.json(user ? { user: { email: user.email } } : {});
+  res.json(user ? { user: { email: user.email, all: user } } : {});
+  // res.json(user);
 }

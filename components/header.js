@@ -76,12 +76,16 @@ export default function Header(props) {
                 <MenuItem 
                   onClick={handleClose}
                 >
-                  プロフィール編集
+                  <Typography variant="button" className={classes.title}>
+                    プロフィール
+                  </Typography>
                 </MenuItem>
                 <MenuItem 
                   onClick={onLogout}
                 >
-                  ログアウト
+                  <Typography variant="button" className={classes.title}>
+                    ログアウト
+                  </Typography>
                 </MenuItem>
               </Menu>
             </div>
