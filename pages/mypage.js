@@ -1,35 +1,24 @@
-import { useEffect } from "react";
 import Router, { useRouter } from "next/router";
-import { parseCookies } from "nookies";
-
-import { auth } from '../pages/api/firebase';
 import Layout from '../components/template/layout';
 
 export default function Mypage(props) {
-  // const router = useRouter();
-
-  const user = auth.onAuthStateChanged((usr) => {
-    if(usr) {
-      console.log(auth.currentUser.uid)
-      return auth.currentUser
-    } else {
-      console.log("nothing")
-      return ""
-    }
-  });
 
   const { email } = props
   const title = "Mypage";
-  console.log(user)
 
   return(
   <>
     <Layout title={title} email={email}>
       <p>Mypage</p>
       <button
-        onClick={()=>console.log(user)}
+        onClick={()=>console.log(email)}
       >
       </button>
+      {email &&(
+        <p>
+          {email}
+        </p>
+      )}
     </Layout>
   </>
   );

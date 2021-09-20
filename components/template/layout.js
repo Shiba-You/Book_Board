@@ -22,7 +22,7 @@ export default function Layout(props) {
       <Head>
         <title>{title}</title>
       </Head>
-      <Header email={email}/>
+      <Header email={email} />
       <div className={classes.main}>
         {props.children}
       </div>
