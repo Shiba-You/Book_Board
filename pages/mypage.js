@@ -1,29 +1,35 @@
+import { useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 
-import firebase from '../pages/api/firebase';
+import { auth } from '../pages/api/firebase';
 import Layout from '../components/template/layout';
 
 export default function Mypage(props) {
   // const router = useRouter();
 
-  const { email, result } = props
-  const user = firebase.auth().currentUser
-  console.log(user)
-  console.log(user.email)
-  console.log(user.uid)
-  console.log(user.password)
-  // const user = firebase
-  //               .auth()
-  //               .signInWithCustomToken(token);
-  // console.log(user)
+  const user = auth.onAuthStateChanged((usr) => {
+    if(usr) {
+      console.log(auth.currentUser.uid)
+      return auth.currentUser
+    } else {
+      console.log("nothing")
+      return ""
+    }
+  });
 
+  const { email } = props
   const title = "Mypage";
+  console.log(user)
 
   return(
   <>
     <Layout title={title} email={email}>
       <p>Mypage</p>
+      <button
+        onClick={()=>console.log(user)}
+      >
+      </button>
     </Layout>
   </>
   );
@@ -40,15 +46,16 @@ Mypage.getInitialProps = async ({ req, res }) => {
     const result = await fetch(`${root}/api/loggedIn`, options);
     const json = (await result.json())
 
+
     if (!json.user) {
       res.writeHead(302, { Location: "/login" });
       res.end();
     }
 
     return { 
-      email: (json.user || {}).email || "",
-      token: json
+      email: (json.user || {}).email || ""
     };
+
   }
 
   if (!isServerSide) {
@@ -58,14 +65,12 @@ Mypage.getInitialProps = async ({ req, res }) => {
     if (!json.user) Router.push({pathname: "/login"});
 
     return { 
-      email: (json.user || {}).email || "",
-      token: json
+      email: (json.user || {}).email || ""
     };
   }
 
   return { 
-    email: "",
-    token: json
+    email: ""
   };
 
 };

@@ -14,4 +14,8 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
-export default firebase;
+const auth = firebase.auth()
+const db = firebase.firestore()
+db.settings({ timestampsInSnapshots: true })
+
+export { auth, db }
