@@ -37,7 +37,6 @@ export default function Login() {
     await login(email, password)
     router.push({
       pathname: "/mypage",
-      query: { email },
     });
   };
 

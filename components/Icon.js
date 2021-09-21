@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import SaveIcon from '@material-ui/icons/Save';
+import CreateIcon from '@material-ui/icons/Create';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -11,18 +13,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Button(props) {
   const { seed } = props;
   const classes = useStyles();
-  // let Icon;
-  // switch (seed) {
-  //   case 'add':
-  //     Icon = <AddIcon className={classes.icon} />
-  //   case 'cancel':
-  //     Icon = <CloseRoundedIcon className={classes.icon} />
-  // }
-  // return (
-  //   <>
-  //     { Icon }
-  //   </>
-  // )
   switch (seed) {
     case 'add':
       return (
@@ -31,6 +21,14 @@ export default function Button(props) {
     case 'cancel':
       return (
         <CloseRoundedIcon className={classes.icon} />
+      )
+    case 'save':
+      return (
+        <SaveIcon className={classes.icon} />
+      )
+    case 'write':
+      return (
+        <CreateIcon className={classes.icon} />
       )
   }
 }

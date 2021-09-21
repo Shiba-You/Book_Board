@@ -43,6 +43,10 @@ export default function Header(props) {
     router.push('/login');
   }
 
+  const toProfile = () => {
+    router.push('/profile');
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
@@ -74,7 +78,7 @@ export default function Header(props) {
                 onClose={handleClose}
               >
                 <MenuItem 
-                  onClick={handleClose}
+                  onClick={toProfile}
                 >
                   <Typography variant="button" className={classes.title}>
                     プロフィール
