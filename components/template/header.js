@@ -4,7 +4,7 @@ import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from "@materi
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { logout } from "../utils/auth";
+import { logout } from "../../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,37 +1,22 @@
 import Router, { useRouter } from "next/router";
 
 import Layout from '../components/template/layout';
-import Button from '../components/Button';
 
-export default function Mypage(props) {
-
+export default function New(props) {
   const { email } = props
-  const title = "Mypage";
+  const title = "Add new book";
 
   return(
   <>
     <Layout title={title} email={email}>
-      <p>Mypage</p>
-      <button
-        onClick={()=>console.log(email)}
-      >
-      </button>
-      {email &&(
-        <>
-          <p>
-            {email}
-          </p>
-          <Button seed="add" twin="0" />
-          <Button seed="cancel" twin="1" />
-        </>
-      )}
+      <p>New book</p>
     </Layout>
   </>
   );
 }
 
 
-Mypage.getInitialProps = async ({ req, res }) => {
+New.getInitialProps = async ({ req, res }) => {
   const isServerSide = typeof window === "undefined";
 
   if (isServerSide && req && res) {
