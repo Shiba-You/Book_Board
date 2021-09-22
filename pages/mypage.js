@@ -2,6 +2,7 @@ import Router, { useRouter } from "next/router";
 
 import Layout from '../components/template/layout';
 import Button from '../components/Button';
+import router from "next/router";
 
 export default function Mypage(props) {
 
