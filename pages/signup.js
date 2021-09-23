@@ -29,15 +29,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Signup() {
   const router = useRouter();
   const classes = useStyles();
+  const [name, setName] = useState("Shiba-You");
   const [email, setEmail] = useState("a.y.chocola2921@gmail.com");
   const [password, setPassword] = useState("Taiyou2921");
   const title = "Sign Up"
 
-  const createAccount = async (email, password) => {
-    await signup(email, password)
+  const createAccount = async (name, email, password) => {
+    await signup(name, email, password)
     router.push({
       pathname: "/mypage",
-      query: { email },
     });
   };
 
@@ -49,6 +49,17 @@ export default function Signup() {
             <Typography variant="h3" className={classes.title}>
               新規作成
             </Typography>
+          </Grid>
+          <Grid container item xs={12}>
+            <TextField
+              className={classes.text}
+              label="name"
+              autoComplete="current-password"
+              variant="outlined"
+              margin="dense"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </Grid>
           <Grid container item xs={12}>
             <TextField
@@ -87,7 +98,7 @@ export default function Signup() {
             <Button
               className={classes.btn}
               variant="contained"
-              onClick = {() => {createAccount(email, password)}}
+              onClick = {() => {createAccount(name, email, password)}}
             >
               新規作成
             </Button>

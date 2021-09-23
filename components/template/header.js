@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const router = useRouter();
   const classes = useStyles();
-  const { email } = props;
+  const { currentUser } = props;
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -54,8 +54,11 @@ export default function Header(props) {
           <Typography variant="h6" color="inherit" className={classes.title}>
             Book Board
           </Typography>
-          {email && (
+          {currentUser && (
             <div>
+              <Typography variant="button" className={classes.title}>
+                {currentUser.name}
+              </Typography>
               <IconButton
                 onClick={handleMenu}
                 color="inherit"

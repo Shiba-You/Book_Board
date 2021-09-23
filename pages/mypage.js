@@ -1,27 +1,25 @@
 import Router, { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import Layout from '../components/template/layout';
 import Button from '../components/Button';
-import router from "next/router";
+import { auth } from './api/firebase'
+
+import { logout } from "../utils/auth";
 
 export default function Mypage(props) {
-
-  const { email } = props
+  const { currentUser } = props
   const title = "Mypage";
 
   return(
   <>
-    <Layout title={title} email={email}>
+    <Layout title={title} currentUser={currentUser}>
       <p>Mypage</p>
       <button
-        onClick={()=>console.log(email)}
-      >
-      </button>
-      {email &&(
+        onClick={()=>console.log(currentUser)}
+      />
+      {currentUser &&(
         <>
-          <p>
-            {email}
-          </p>
           <Button seed="add" twin="0" />
           <Button seed="cancel" twin="1" />
         </>
@@ -44,7 +42,7 @@ Mypage.getInitialProps = async ({ req, res }) => {
       res.end();
     }
     return { 
-      email: (json.user || {}).email || ""
+      currentUser: (json.user || {}).currentUser || ""
     };
   }
   if (!isServerSide) {
@@ -52,10 +50,10 @@ Mypage.getInitialProps = async ({ req, res }) => {
     const json = (await result.json())
     if (!json.user) Router.push({pathname: "/login"});
     return { 
-      email: (json.user || {}).email || ""
+      currentUser: (json.user || {}).currentUser || ""
     };
   }
   return { 
-    email: ""
+    currentUser: ""
   };
 };

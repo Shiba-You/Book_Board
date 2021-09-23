@@ -8,18 +8,16 @@ export default async function meApi(req, res) {
 
   const auth = firebaseAdmin.auth();
 
-  // const user = await auth
-  //   .verifySessionCookie(sessionId, true)
-  //   .catch(() => null);
-
-  const user = await auth
+  await auth
     .verifySessionCookie(sessionId, true)
     .then((decodedClaims) => {
-      var uid = decodedClaims.uid;
-      console.log(uid)
-      res.json({user: {email: uid}}); // singin してるのはこのuidさんだよ
+      res.json({
+        user: {
+          currentUser: decodedClaims
+        }
+      });
     })
     .catch(() => null);
 
-  res.json(user ? { user: { email: user.email } } : {});
+  // res.json(user ? { user: { email: user.email } } : {});
 }

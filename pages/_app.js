@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps}) {
+  // const { email, all } = props
   useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
@@ -12,5 +13,3 @@ function MyApp({ Component, pageProps }) {
     <Component {...pageProps} />
   )
 }
-
-export default MyApp

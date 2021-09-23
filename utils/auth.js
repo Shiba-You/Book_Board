@@ -18,11 +18,18 @@ export const logout = async () => {
   });
 };
 
-export const signup = async (email, password) => {
+export const signup = async (name, email, password) => {
   try {
-    (await auth.createUserWithEmailAndPassword(email, password)) &&
-      db.collection('users').add({ email, password,  })
-      await login(email, password)
+    await auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        const user = auth.currentUser;
+        return user.updateProfile({
+          displayName: name,
+          photoURL: ''
+        })
+      })
+    await login(email, password)
   } catch (error) {
     alert(error);
   }

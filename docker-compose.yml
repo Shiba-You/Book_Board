@@ -7,6 +7,8 @@ services:
     image: img-book-board
     volumes:
       - .:/usr/src/app
+      - ~/.config/configstore:/root/.”config/configstore
+      - ~/.local:/root/.local
     ports:
       - 3000:3000
     command:

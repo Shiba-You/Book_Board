@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Layout(props) {
-  const { title, email } = props
+  const { title, currentUser } = props
   const classes = useStyles();
 
   return (
@@ -22,7 +22,7 @@ export default function Layout(props) {
       <Head>
         <title>{title}</title>
       </Head>
-      <Header email={email} />
+      <Header currentUser={currentUser} />
       <div className={classes.main}>
         {props.children}
       </div>
