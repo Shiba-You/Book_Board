@@ -15,7 +15,7 @@ export const changeNameAndPhotoURL = async (name) => {
 export const changeEmail = async (email) => {
   const user = auth.currentUser;
   try {
-    await user.updateEmail({email})
+    await user.updateEmail(email)
   } catch (error) {
     alert(error);
   }
