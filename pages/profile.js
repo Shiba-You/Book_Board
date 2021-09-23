@@ -5,8 +5,13 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { Typography } from "@material-ui/core"
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 import Layout from '../components/template/layout';
+import { changeNameAndPhotoURL, changeEmail, changePassword, reLogin } from '../utils/profile'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,8 +29,13 @@ const useStyles = makeStyles((theme) => ({
     width: '80%',
   },
   explain: {
-    marginTop: '2%',
     marginLeft: '5%'
+  },
+  bar: {
+    marginTop: '10%'
+  },
+  dialogBtn: {
+    textAlign: 'left',
   }
 }));
 
@@ -36,9 +46,38 @@ export default function Profile(props) {
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
   const [photo, setPhoto] = useState(currentUser.photo);
-  const [password, setPassword] = useState();
-  const [passwordValid, setPasswordValid] = useState();
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordValid, setNewPasswordValid] = useState('');
+  const [open, setOpen] = useState(false);
   const title = "Profile";
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const updateProfile = async (name, email, password) => {
+    let flag = false
+    if (name != currentUser.name  && name) {
+      // await changeNameAndPhotoURL(name, photoURL)
+      await changeNameAndPhotoURL(name)
+      flag = true
+    }
+    if (email != currentUser.email && email) {
+      await changeEmail(email)
+      flag = true
+    }
+    if (flag) {
+      await reLogin(email, password)
+      router.reload()
+    } else {
+      alert('エラーが発生しました')
+    }
+  };
 
   return(
   <>
@@ -71,33 +110,6 @@ export default function Profile(props) {
             onChange={(e) => setEmail(e.target.value)}
           />
         </Grid>
-        <Grid container item xs={12}>
-          <Typography variant="h6" className={classes.text, classes.explain}>
-            If you forgot or want to change your password...
-          </Typography>
-        </Grid>
-        <Grid container item xs={12}>
-          <TextField
-            className={classes.text}
-            label="password"
-            autoComplete="current-password"
-            variant="outlined"
-            margin="dense"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Grid>
-        <Grid container item xs={12}>
-          <TextField
-            className={classes.text}
-            label="password(again)"
-            autoComplete="current-password"
-            variant="outlined"
-            margin="dense"
-            value={passwordValid}
-            onChange={(e) => setPasswordValid(e.target.value)}
-          />
-        </Grid>
         <Grid container item sm={6} xs={12}>
           <Button
             className={classes.btn}
@@ -112,12 +124,77 @@ export default function Profile(props) {
           <Button
             className={classes.btn}
             variant="contained"
-            onClick = {() => {updateProfile(name, email, password)}}
+            onClick = {handleClickOpen}
           >
             更新
           </Button>
         </Grid>
       </Grid>
+      <hr className={classes.bar} />
+      <Grid container spacing={3}>
+        <Grid container item xs={12}>
+          <Typography variant="h6" className={classes.text, classes.explain}>
+            If you forgot or want to change your password...
+          </Typography>
+        </Grid>
+        <Grid container item xs={12}>
+          <TextField
+            className={classes.text}
+            label="password"
+            autoComplete="current-password"
+            variant="outlined"
+            margin="dense"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+        </Grid>
+        <Grid container item xs={12}>
+          <TextField
+            className={classes.text}
+            label="password(again)"
+            autoComplete="current-password"
+            variant="outlined"
+            margin="dense"
+            value={newPasswordValid}
+            onChange={(e) => setNewPasswordValid(e.target.value)}
+          />
+        </Grid>
+      </Grid>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth={true}
+        maxWidth='md'
+      >
+        <DialogContent>
+          <DialogContentText>
+            パスワードを入力してください．
+          </DialogContentText>
+          <TextField
+            className={classes.text}
+            label="password"
+            autoComplete="current-password"
+            variant="outlined"
+            margin="dense"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleClose}
+            color="primary"
+          >
+            戻る
+          </Button>
+          <Button
+            onClick={() => updateProfile(name, email, password)}
+            color="primary"
+          >
+            保存
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Layout>
   </>
   );
@@ -142,7 +219,7 @@ Profile.getInitialProps = async ({ req, res }) => {
   if (!isServerSide) {
     const result = await fetch("./api/loggedIn");
     const json = (await result.json())
-    if (!json.user) Router.push({pathname: "/login"});
+    if (!json.user) Router.push({ pathname: "/login" });
     return { 
       currentUser: (json.user || {}).currentUser || ""
     };

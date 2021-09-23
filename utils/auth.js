@@ -1,4 +1,4 @@
-import { auth, db } from '../pages/api/firebase';
+import { auth } from '../pages/api/firebase';
 
 export const login = async (email, password) => {
   try {
