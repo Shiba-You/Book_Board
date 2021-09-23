@@ -61,7 +61,6 @@ export default function Profile(props) {
   };
 
   const updateProfile = async (name, email, password) => {
-    console.log(name, email, password)
     let flag = false
     if (name != currentUser.name  && name) {
       // await changeNameAndPhotoURL(name, photoURL)
