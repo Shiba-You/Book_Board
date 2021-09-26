@@ -1,11 +1,8 @@
-import Router, { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import Router from "next/router";
 
 import Layout from '../components/template/layout';
-import Button from '../components/Button';
-import { auth } from './api/firebase'
+import FloatButton from '../components/FloatButton';
 
-import { logout } from "../utils/auth";
 
 export default function Mypage(props) {
   const { currentUser } = props
@@ -20,8 +17,7 @@ export default function Mypage(props) {
       />
       {currentUser &&(
         <>
-          <Button seed="add" twin="0" />
-          <Button seed="cancel" twin="1" />
+          <FloatButton seed="add" twin="0" />
         </>
       )}
     </Layout>

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 
 import Icon from './Icon'
+import { saveArticle } from "../utils/new";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -18,21 +19,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Button(props) {
+export default function FloatButton(props) {
   const router = useRouter();
-  const { seed, twin } = props;
+  const { seed, twin, artileTitle, content, currentuser, image } = props;
   const classes = useStyles({ twin });
   const bColor = seed == "cancel" ? "secondary" : "primary";
-  const action = () => {
+  const action = async () => {
     switch (seed) {
       case 'add':
         router.push('/new');
         break
       case 'cancel':
-        // cancel時の操作
+        router.back();
         break
       case 'save':
-        // save時の操作
+        await saveArticle(artileTitle, content, currentuser, image);
         break
       case 'write':
         // write時の操作

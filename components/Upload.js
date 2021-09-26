@@ -30,7 +30,7 @@ export default function UpLoad(props) {
   const classes = useStyles();
   const uploadInputRef = useRef(null);
   const { image, setImage } = props
-  const [cropData, setCropData] = useState("#");
+  const [originImage, setOriginImage] = useState();
   const [cropper, setCropper] = useState();
   const [open, setOpen] = useState(false);
 
@@ -47,7 +47,7 @@ export default function UpLoad(props) {
     if (e.length != 0) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result);
+        setOriginImage(reader.result);
       };
       reader.readAsDataURL(e[0]);
       handleClickOpen();
@@ -56,7 +56,7 @@ export default function UpLoad(props) {
 
   const getCropData = () => {
     if (typeof cropper !== "undefined") {
-      setCropData(cropper.getCroppedCanvas().toDataURL());
+      setImage(cropper.getCroppedCanvas().toDataURL());
     }
     handleClose();
   };
@@ -64,7 +64,7 @@ export default function UpLoad(props) {
   return (
     <div>
       <div>
-        {!image && (
+        {!originImage && (
           <div 
             className={classes.dropRoot}
           >
@@ -72,17 +72,17 @@ export default function UpLoad(props) {
               dropzoneClass={classes.drop}
               showPreviewsInDropzone={false}
               acceptedFiles={['image/*']}
-              dropzoneText={"画像を登録してください"}
+              dropzoneText={"サムネイルを選択"}
               filesLimit={1}
               onChange={(e) => onChange(e)}
             />
           </div>
         )}
-        {image && (
+        {originImage && (
           <>
             <img
               className={classes.img}
-              src={cropData}
+              src={image}
               alt="cropped"
             />
             <input
@@ -115,7 +115,7 @@ export default function UpLoad(props) {
               className={classes.cropper}
               zoomTo={0.5}
               aspectRatio={9 / 16}
-              src={image}
+              src={originImage}
               responsive={true}
               onInitialized={(e) => {setCropper(e)}}
               guides={true}
