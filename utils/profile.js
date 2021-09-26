@@ -21,10 +21,14 @@ export const changeEmail = async (email) => {
   }
 };
 
-export const changePassword = async (password) => {
-  const user = auth.currentUser;
+export const changePassword = async (email, newPass) => {
   try {
-    await user.updatePassword({password})
+    await auth
+    .currentUser
+    .updatePassword(newPass)
+    .then(() => {
+      alert("success")
+    })
   } catch (error) {
     alert(error);
   }

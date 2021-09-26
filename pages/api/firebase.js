@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import 'firebase/storage';
 
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_apiKey,
@@ -16,6 +17,7 @@ if (firebase.apps.length === 0) {
 
 const auth = firebase.auth()
 const db = firebase.firestore()
+const storage = firebase.storage()
 db.settings({ timestampsInSnapshots: true })
 
-export { auth, db }
+export { auth, db, storage }

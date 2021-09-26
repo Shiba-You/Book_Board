@@ -79,6 +79,14 @@ export default function Profile(props) {
     }
   };
 
+  const updatePass = async (email, newPassword, newPasswordValid) => {
+    if (newPassword == newPasswordValid) {
+      await changePassword(email, newPassword)
+    } else {
+      return
+    }
+  }
+
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
@@ -131,7 +139,7 @@ export default function Profile(props) {
         </Grid>
       </Grid>
       <hr className={classes.bar} />
-      <Grid container spacing={3}>
+      <Grid container justifyContent="flex-end" spacing={3}>
         <Grid container item xs={12}>
           <Typography variant="h6" className={classes.text, classes.explain}>
             If you forgot or want to change your password...
@@ -158,6 +166,20 @@ export default function Profile(props) {
             value={newPasswordValid}
             onChange={(e) => setNewPasswordValid(e.target.value)}
           />
+        </Grid>
+        <Grid
+          container
+          item
+          sm={6}
+          xs={12}
+        >
+          <Button
+            className={classes.btn}
+            variant="contained"
+            onClick = {() => updatePass(email, newPassword, newPasswordValid)}
+          >
+            パスワード変更
+          </Button>
         </Grid>
       </Grid>
       <Dialog
