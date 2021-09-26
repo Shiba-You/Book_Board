@@ -8,8 +8,9 @@ const useStyles = makeStyles((theme) => ({
   main: {
     margin: 'auto',
     width: '80%',
-    height: '1000px',
+    minHeight: '900px',
     marginTop: '48px',
+    marginBottom: "48px"
   },
 }));
 

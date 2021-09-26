@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '100px'
   },
+  text: {
+    width: "100%",
+  }
 }));
 
 export default function New(props) {
@@ -29,7 +32,7 @@ export default function New(props) {
         <Grid container item xs={12}>
           <TextField
             className={classes.text}
-            label="name"
+            label="タイトル"
             autoComplete="current-password"
             variant="outlined"
             margin="dense"
@@ -37,15 +40,15 @@ export default function New(props) {
             onChange={(e) => setArticleTitle(e.target.value)}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item md={3}>
           <UpLoad currentUser={currentUser} image={image} setImage={setImage} />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item md={9}>
           <TextField
-            id="outlined-textarea"
-            label="Multiline Placeholder"
-            placeholder="Placeholder"
+            className={classes.text}
+            placeholder="本文をここに記入してください"
             multiline
+            minRows={50}
             variant="outlined"
             value={content}
             onChange={(e) => setContent(e.target.value)}
