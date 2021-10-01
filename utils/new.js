@@ -26,12 +26,12 @@ export const saveArticle = async (title, content, currentUser, image) => {
     console.log("val")
     console.log(val)
   })
-  // console.log("imageUrl")
-  // console.log(imageUrl)
+  console.log("image")
+  console.log(image)
   // await db
   //   .collection('version/1/articles/[DocumentId]')
   //   .set({
-  //     thumbanil: ,
+  //     thumbanil: image,
   //     title: title,
   //     user_uid: currentUser.uid,
   //     content: content,
