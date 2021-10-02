@@ -26,16 +26,15 @@ export const saveArticle = async (title, content, currentUser, image) => {
     console.log("val")
     console.log(val)
   })
-  console.log("image")
-  console.log(image)
-  // await db
-  //   .collection('version/1/articles/[DocumentId]')
-  //   .set({
-  //     thumbanil: image,
-  //     title: title,
-  //     user_uid: currentUser.uid,
-  //     content: content,
-  //     createAt: db.Timestamp.now(),
-  //     updateAt: db.Timestamp.now()
-  //   });
+  await db
+    .collection('version/1/articles')
+    .doc(currentUser.uid)
+    .set({
+      thumbanil: image,
+      title: title,
+      user_uid: currentUser.uid,
+      content: content,
+      createAt: new Date(),
+      updateAt: new Date()
+    });
 };

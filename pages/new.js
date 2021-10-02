@@ -55,8 +55,18 @@ export default function New(props) {
           />
         </Grid>
       </Grid>
-      <FloatButton seed="cancel" twin="1" />
-      <FloatButton seed="save" twin="0" artileTitle={artileTitle} content={content} currentuser={currentUser} image={image} />
+      <FloatButton
+        seed="cancel"
+        twin="1"
+      />
+      <FloatButton
+        seed="save"
+        twin="0"
+        artileTitle={artileTitle}
+        content={content}
+        currentuser={currentUser}
+        image={image}
+      />
     </Layout>
   </>
   );
