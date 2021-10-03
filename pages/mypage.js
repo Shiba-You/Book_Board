@@ -34,11 +34,6 @@ export default function Mypage(props) {
           )
         })
       )}
-      {articles && (
-        <button onClick={() => articles.map(article => console.log(article))}>
-          check
-        </button>
-      )}
       <FloatButton seed="add" twin="0" />
     </Layout>
   </>
