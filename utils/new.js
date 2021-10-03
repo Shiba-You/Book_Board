@@ -28,7 +28,7 @@ export const saveArticle = async (title, content, currentUser, image) => {
   })
   await db
     .collection('version/1/articles')
-    .doc(currentUser.uid)
+    .doc()
     .set({
       thumbanil: image,
       title: title,

@@ -1,25 +1,45 @@
 import Router from "next/router";
+import { useEffect, useState } from "react";
 
+import { db } from './api/firebase';
 import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
-
+import Article from "../components/article";
 
 export default function Mypage(props) {
+
   const { currentUser } = props
+  const docRef = db
+    .collection('version/1/articles')
+  const [articles, setArticles] = useState([]);
   const title = "Mypage";
+  useEffect(() => {
+    docRef
+      .where('user_uid', '==', currentUser.uid)
+      .get()
+      .then(snapshot => {
+        let docs = [];
+        snapshot.forEach(doc => docs.push(doc.data()));
+        setArticles(docs);
+      })
+  }, []);
 
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
-      <p>Mypage</p>
-      <button
-        onClick={()=>console.log(currentUser)}
-      />
-      {currentUser &&(
-        <>
-          <FloatButton seed="add" twin="0" />
-        </>
+      {(
+        articles.map(article => {
+          return (
+            <Article title={article.title} content={article.content}/>
+          )
+        })
       )}
+      {articles && (
+        <button onClick={() => articles.map(article => console.log(article))}>
+          check
+        </button>
+      )}
+      <FloatButton seed="add" twin="0" />
     </Layout>
   </>
   );
