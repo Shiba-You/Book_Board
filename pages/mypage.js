@@ -1,5 +1,6 @@
 import Router from "next/router";
 import { useEffect, useState } from "react";
+import Grid from "@material-ui/core/Grid";
 
 import { db } from './api/firebase';
 import Layout from '../components/template/layout';
@@ -27,13 +28,23 @@ export default function Mypage(props) {
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
-      {(
-        articles.map(article => {
-          return (
-            <Article title={article.title} content={article.content} createdAt={article.createdAt} thumbnail={article.thumbnail}/>
-          )
-        })
-      )}
+      <Grid container spacing={3}>
+        {(
+          articles.map((article, i) => {
+            return (
+              <Grid item xs={12} md={6}>
+                <Article
+                  key={i}
+                  title={article.title}
+                  content={article.content}
+                  createAt={article.createAt}
+                  thumbanil={article.thumbanil}
+                />
+              </Grid>
+            )
+          })
+        )}
+      </Grid>
       <FloatButton seed="add" twin="0" />
     </Layout>
   </>
