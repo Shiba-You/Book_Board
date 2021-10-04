@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    marginTop: '10px'
   },
   bullet: {
     display: 'inline-block',
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
     transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14,
+    fontSize: 21,
   },
   pos: {
     marginBottom: 12,
@@ -24,24 +25,16 @@ const useStyles = makeStyles({
 
 export default function Article(props) {
   const classes = useStyles();
-  const {} = props
+  const { title, content, creatdAt, thumbnail} = props
 
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
-        </Typography>
-        <Typography variant="h5" component="h2">
-          aaaaaaaaaaaaaaaaaaa
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
+        <Typography className={classes.title} variant="h5" component="h2">
+          {title}
         </Typography>
         <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+          {content}
         </Typography>
       </CardContent>
       <CardActions>

@@ -30,7 +30,7 @@ export default function Mypage(props) {
       {(
         articles.map(article => {
           return (
-            <Article title={article.title} content={article.content}/>
+            <Article title={article.title} content={article.content} createdAt={article.createdAt} thumbnail={article.thumbnail}/>
           )
         })
       )}
