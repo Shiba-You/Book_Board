@@ -1,11 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { useRouter } from "next/router";
 
 import { timestampToTime } from '../utils/main';
 
@@ -27,10 +26,11 @@ const useStyles = makeStyles({
 
 export default function Article(props) {
   const classes = useStyles();
-  const { title, content, createAt, thumbanil} = props
+  const router = useRouter();
+  const { title, content, createAt, thumbanil, uid} = props
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick={() => router.push(`/articles/${uid}`)}>
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={4} md={3}>

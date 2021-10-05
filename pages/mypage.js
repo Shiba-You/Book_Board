@@ -1,11 +1,13 @@
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
+import Button from '@material-ui/core/Button';
 
 import { db } from './api/firebase';
 import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
 import Article from "../components/article";
+
 
 export default function Mypage(props) {
 
@@ -20,7 +22,9 @@ export default function Mypage(props) {
       .get()
       .then(snapshot => {
         let docs = [];
-        snapshot.forEach(doc => docs.push(doc.data()));
+        snapshot.forEach(doc => {
+          docs.push(Object.assign(doc.data(), {uid: doc.id}))
+        });
         setArticles(docs);
       })
   }, []);
@@ -29,6 +33,9 @@ export default function Mypage(props) {
   <>
     <Layout title={title} currentUser={currentUser}>
       <Grid container spacing={3}>
+        <Button
+          onClick={() => console.log(articles)}
+        />
         {(
           articles.map((article, i) => {
             return (
@@ -39,6 +46,7 @@ export default function Mypage(props) {
                   content={article.content}
                   createAt={article.createAt}
                   thumbanil={article.thumbanil}
+                  uid={article.uid}
                 />
               </Grid>
             )

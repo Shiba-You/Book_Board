@@ -1,4 +1,3 @@
-import { resolveHref } from 'next/dist/shared/lib/router/router';
 import { db, storage } from '../pages/api/firebase';
 import { makeRnd } from './main';
 
