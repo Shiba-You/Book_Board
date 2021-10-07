@@ -3,45 +3,29 @@ import { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from '@material-ui/core/Button';
 
-import { db } from './api/firebase';
 import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
 import Article from "../components/article";
+import { getAllArticles, getAllArticlesUid } from "../utils/articles";
 
 
 export default function Mypage(props) {
-
   const { currentUser } = props
-  const docRef = db
-    .collection('version/1/articles')
   const [articles, setArticles] = useState([]);
   const title = "Mypage";
   useEffect(() => {
-    docRef
-      .where('user_uid', '==', currentUser.uid)
-      .get()
-      .then(snapshot => {
-        let docs = [];
-        snapshot.forEach(doc => {
-          docs.push(Object.assign(doc.data(), {uid: doc.id}))
-        });
-        setArticles(docs);
-      })
+    getAllArticles(currentUser, setArticles)
   }, []);
 
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
       <Grid container spacing={3}>
-        <Button
-          onClick={() => console.log(articles)}
-        />
         {(
           articles.map((article, i) => {
             return (
-              <Grid item xs={12} md={6}>
+              <Grid key={i} item xs={12} md={6}>
                 <Article
-                  key={i}
                   title={article.title}
                   content={article.content}
                   createAt={article.createAt}
@@ -52,6 +36,9 @@ export default function Mypage(props) {
             )
           })
         )}
+        <Button 
+          onClick={() => getAllArticlesUid()}
+        />
       </Grid>
       <FloatButton seed="add" twin="0" />
     </Layout>

@@ -7,6 +7,7 @@ export const makeRnd = (N) => {
   return rand_str
 }
 export const timestampToTime = (timestamp) => {
+  if (!timestamp) return
   const date = timestamp.toDate();
   const yyyy = `${date.getFullYear()}`;
   const MM = `0${date.getMonth() + 1}`.slice(-2);
