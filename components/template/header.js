@@ -47,12 +47,17 @@ export default function Header(props) {
     router.push('/profile');
   }
 
+  const backHome = () => {
+    console.log(router)
+    router.push('/mypage')
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar variant="dense">
           <Typography variant="h6" color="inherit" className={classes.title}>
-            Book Board
+            <a onClick={() => backHome()}>Book Board</a>
           </Typography>
           {currentUser && (
             <div>

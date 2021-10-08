@@ -16,7 +16,15 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     width: "100%",
-  }
+  },
+  // drop: {
+  //   "padding": "56.25% 0",
+  //   "top": 0,
+  // },
+  img: {
+    width: "100%",
+    // outline: "1px solid #cccccc",
+  },
 }));
 
 export default function ArticleDetail(props) {
@@ -27,6 +35,7 @@ export default function ArticleDetail(props) {
 
   useEffect(() => {
     getArticle(router.query.id, setArticle)
+    console.log(article)
   }, []);
   return (
     <>
@@ -39,6 +48,9 @@ export default function ArticleDetail(props) {
               disabled
               value={article.title}
             />
+          </Grid>
+          <Grid item md={3}>
+            <img src={article.thumbanil} className={classes.img} />
           </Grid>
           <Grid item md={9}>
             <TextField
@@ -77,7 +89,7 @@ ArticleDetail.getInitialProps = async ({ req, res }) => {
     };
   }
   if (!isServerSide) {
-    const result = await fetch("./api/loggedIn");
+    const result = await fetch("../api/loggedIn");
     const json = (await result.json())
     if (!json.user) Router.push({pathname: "/login"});
     return { 

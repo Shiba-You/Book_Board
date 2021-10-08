@@ -63,7 +63,8 @@ Mypage.getInitialProps = async ({ req, res }) => {
     };
   }
   if (!isServerSide) {
-    const result = await fetch("./api/loggedIn");
+    console.log(Router)
+    const result = await fetch("../api/loggedIn");
     const json = (await result.json())
     if (!json.user) Router.push({pathname: "/login"});
     return { 
