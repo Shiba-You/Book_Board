@@ -11,6 +11,7 @@ import { timestampToTime } from '../utils/main';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    cursor: 'pointer'
   },
   title: {
     marginTop: 2,

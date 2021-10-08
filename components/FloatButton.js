@@ -6,12 +6,20 @@ import Icon from './Icon'
 import { saveArticle } from "../utils/new";
 
 const useStyles = makeStyles((theme) => ({
-  button: {
+  primaryPst: {
     margin: 0,
     top: 'auto',
     right: 40,
-    bottom: ({ twin }) => twin * 80 + 40,
     left: 'auto',
+    bottom: 40,
+    position: 'fixed',
+  },
+  secondaryPst: {
+    margin: 0,
+    top: 'auto',
+    right: 40,
+    left: 'auto',
+    bottom: 120,
     position: 'fixed',
   },
   icon: {
@@ -21,10 +29,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FloatButton(props) {
   const router = useRouter();
-  const { seed, twin, artileTitle, content, currentuser, image } = props;
-  const classes = useStyles({ twin });
+  const { seed, position, artileTitle, content, currentuser, image } = props;
+  const classes = useStyles();
   const bColor = seed == "cancel" ? "secondary" : "primary";
-  const action = async () => {
+  const pst = position == 0 ? classes.primaryPst : classes.secondaryPst;
+  const action = () => {
     switch (seed) {
       case 'add':
         router.push('/new');
@@ -33,7 +42,7 @@ export default function FloatButton(props) {
         router.back();
         break
       case 'save':
-        await saveArticle(artileTitle, content, currentuser, image);
+        saveArticle(artileTitle, content, currentuser, image);
         break
       case 'write':
         // write時の操作
@@ -46,7 +55,7 @@ export default function FloatButton(props) {
     <>
       <IconButton
         color={bColor}
-        className={classes.button}
+        className={pst}
         onClick={() => action(seed)}
       >
         <Icon seed={seed} />

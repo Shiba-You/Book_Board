@@ -40,7 +40,7 @@ export default function Mypage(props) {
           onClick={() => getAllArticlesUid()}
         />
       </Grid>
-      <FloatButton seed="add" twin="0" />
+      <FloatButton seed="add" position="0" />
     </Layout>
   </>
   );

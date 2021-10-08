@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 export default function MyApp({ Component, pageProps}) {
   // const { email, all } = props
@@ -13,3 +14,8 @@ export default function MyApp({ Component, pageProps}) {
     <Component {...pageProps} />
   )
 }
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired,
+};

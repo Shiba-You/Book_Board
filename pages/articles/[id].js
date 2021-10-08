@@ -65,7 +65,7 @@ export default function ArticleDetail(props) {
         </Grid>
         <FloatButton
           seed="write"
-          twin="0"
+          position="0"
         />
       </Layout>
     </>
