@@ -36,9 +36,6 @@ export default function Mypage(props) {
             )
           })
         )}
-        <Button 
-          onClick={() => getAllArticlesUid()}
-        />
       </Grid>
       <FloatButton seed="add" position="0" />
     </Layout>

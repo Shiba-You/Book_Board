@@ -76,7 +76,6 @@ export default function Header(props) {
                 <AccountCircle />
               </IconButton>
               <Menu
-                id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: 'top',

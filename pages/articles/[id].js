@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 // import { timestampToTime } from '../../utils/main';
 import { getArticle } from '../../utils/articles';
@@ -17,13 +18,13 @@ const useStyles = makeStyles((theme) => ({
   text: {
     width: "100%",
   },
-  // drop: {
-  //   "padding": "56.25% 0",
-  //   "top": 0,
-  // },
+  text: {
+    width: "100%",
+    overflowWrap: "break-word",
+    whiteSpace: "pre-wrap"
+  },
   img: {
     width: "100%",
-    // outline: "1px solid #cccccc",
   },
 }));
 
@@ -35,32 +36,31 @@ export default function ArticleDetail(props) {
 
   useEffect(() => {
     getArticle(router.query.id, setArticle)
-    console.log(article)
   }, []);
   return (
     <>
       <Layout title={article.title} currentUser={currentUser}>
         <Grid container spacing={3} className={classes.root}>
-          <Grid container item xs={12}>
-            <TextField
-              className={classes.text}
-              margin="dense"
-              disabled
-              value={article.title}
-            />
+          <Grid item xs={12}>
+            <Typography className={classes.title} variant="h3">
+              {article.title}
+            </Typography>
           </Grid>
           <Grid item md={3}>
             <img src={article.thumbanil} className={classes.img} />
           </Grid>
           <Grid item md={9}>
-            <TextField
+            <Typography className={classes.text} variant="body1">
+              {article.content}
+            </Typography>
+            {/* <TextField
               className={classes.text}
               multiline
               minRows={50}
               variant="outlined"
               disabled
               value={article.content}
-            />
+            /> */}
           </Grid>
         </Grid>
         <FloatButton
