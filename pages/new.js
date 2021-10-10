@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
 export default function New(props) {
   const { currentUser } = props
   const classes = useStyles();
-  const title = "Add new book";
+  const title = "Add new Article";
   const [artileTitle, setArticleTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState("");
+  const [thumbanil, setThumbanil] = useState("");
 
   return(
   <>
@@ -41,7 +41,7 @@ export default function New(props) {
           />
         </Grid>
         <Grid item md={3}>
-          <UpLoad currentUser={currentUser} image={image} setImage={setImage} />
+          <UpLoad currentUser={currentUser} image={thumbanil} setImage={setThumbanil} />
         </Grid>
         <Grid item md={9}>
           <TextField
@@ -65,7 +65,7 @@ export default function New(props) {
         artileTitle={artileTitle}
         content={content}
         currentuser={currentUser}
-        image={image}
+        image={thumbanil}
       />
     </Layout>
   </>

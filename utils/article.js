@@ -1,6 +1,33 @@
 import { db, storage } from '../pages/api/firebase';
 import { makeRnd } from './main';
 
+export const getAllArticles = (currentUser, setArticles) => {
+  const docRef = db.collection('version/1/articles')
+  docRef
+    .where('user_uid', '==', currentUser.uid)
+    .get()
+    .then(snapshot => {
+      let docs = [];
+      snapshot.forEach(doc => {
+        docs.push(Object.assign(doc.data(), {uid: doc.id}))
+      });
+      setArticles(docs);
+    })
+};
+
+export const getArticle = (uid, setArticleTitle, setThumbanil, setContent) => {
+  const docRef = db.collection('version/1/articles')
+  docRef
+    .doc(uid)
+    .get()
+    .then(doc => {
+      // console.log(doc.data())
+      setArticleTitle(doc.data().title);
+      setThumbanil(doc.data().thumbanil);
+      setContent(doc.data().content);
+    });
+};
+
 export const saveImage = async (currentUser, image, imageTag) => {
   if (image === "") {
     // TODO エラー処理
@@ -33,6 +60,20 @@ export const saveArticle = (title, content, currentUser, image) => {
         user_uid: currentUser.uid,
         content: content,
         createAt: new Date(),
+        updateAt: new Date()
+      });
+  })
+};
+
+export const editArticle = (articleUid, title, content, currentUser, image) => {
+  const imageTag = makeRnd(16)
+  saveImage(currentUser, image, imageTag).then(storageUrl => {
+    db.collection('version/1/articles')
+      .doc(articleUid)
+      .update({
+        thumbanil: storageUrl,
+        title: title,
+        content: content,
         updateAt: new Date()
       });
   })

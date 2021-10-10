@@ -26,9 +26,13 @@ export default function Button(props) {
       return (
         <SaveIcon className={classes.icon} />
       )
-    case 'write':
+    case 'edit':
       return (
         <CreateIcon className={classes.icon} />
+      )
+    case 'update':
+      return (
+        <SaveIcon className={classes.icon} />
       )
   }
 }

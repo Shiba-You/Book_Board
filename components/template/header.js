@@ -50,7 +50,6 @@ export default function Header(props) {
   }
 
   const backHome = () => {
-    console.log(router)
     router.push('/mypage')
   }
 

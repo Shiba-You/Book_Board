@@ -64,7 +64,7 @@ export default function UpLoad(props) {
   return (
     <div>
       <div>
-        {!originImage && (
+        {!image && (
           <div 
             className={classes.dropRoot}
           >
@@ -78,7 +78,7 @@ export default function UpLoad(props) {
             />
           </div>
         )}
-        {originImage && (
+        {image && (
           <>
             <img
               className={classes.img}

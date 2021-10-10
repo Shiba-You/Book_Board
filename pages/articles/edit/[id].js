@@ -7,9 +7,11 @@ import { TextField } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
 // import { timestampToTime } from '../../utils/main';
-import { getArticle } from '../../utils/article';
-import Layout from '../../components/template/layout';
-import FloatButton from '../../components/FloatButton';
+import { getArticle } from '../../../utils/article';
+import Layout from '../../../components/template/layout';
+import FloatButton from '../../../components/FloatButton';
+import UpLoad from '../../../components/Upload';
+import { toBase64Url } from '../../../utils/main';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,45 +33,71 @@ const useStyles = makeStyles((theme) => ({
 export default function ArticleDetail(props) {
   const router = useRouter();
   const classes = useStyles();
-  const { currentUser } = props
+  const { currentUser } = props;
   const [articleTitle, setArticleTitle] = useState([]);
   const [thumbanil, setThumbanil] = useState([]);
   const [content, setContent] = useState([]);
-
+  const title = "Edit Article";
   useEffect(() => {
     getArticle(router.query.id, setArticleTitle, setThumbanil, setContent)
   }, []);
+  const toBase64 = () => {
+    console.log(thumbanil)
+  }
+
 
   return (
-    <>
-      <Layout title={articleTitle} currentUser={currentUser}>
-        <Grid container spacing={3} className={classes.root}>
-          <Grid item xs={12}>
-            <Typography className={classes.title} variant="h3">
-              {articleTitle}
-            </Typography>
-          </Grid>
-          <Grid item md={3}>
-            <img src={thumbanil} className={classes.img} />
-          </Grid>
-          <Grid item md={9}>
-            <Typography className={classes.text} variant="body1">
-              {content}
-            </Typography>
-          </Grid>
+    <Layout title={title} currentUser={currentUser}>
+      <Grid container spacing={3} className={classes.root}>
+        <Grid container item xs={12}>
+          <TextField
+            className={classes.text}
+            label="タイトル"
+            id="standard-basic"
+            margin="dense"
+            value={articleTitle}
+            onChange={(e) => setArticleTitle(e.target.value)}
+          />
         </Grid>
-        <FloatButton seed="cancel" position="1" />
-        <FloatButton
-          seed="edit"
-          position="0"
-          currentuser={currentUser}
-          articleUid={router.query.id}
-        />
-        <Button
-          onClick={()=>console.log(router.query.id)}
-        />
-      </Layout>
-    </>
+        <Grid item md={3}>
+          <UpLoad currentUser={currentUser} image={thumbanil} setImage={setThumbanil} />
+        </Grid>
+        <Grid item md={9}>
+          <TextField
+            className={classes.text}
+            placeholder="本文をここに記入してください"
+            multiline
+            minRows={50}
+            variant="outlined"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </Grid>
+      </Grid>
+      <FloatButton
+        seed="cancel"
+        position="1"
+      />
+      <FloatButton
+        seed="save"
+        position="0"
+        articleUid={router.query.id}
+        currentuser={currentUser}
+        artileTitle={articleTitle}
+        content={content}
+        image={thumbanil}
+      />
+      <Button
+        onClick={()=>toBase64()}
+      >
+        thumbnail
+      </Button>
+      <Button
+        onClick={()=>console.log(thumbanil)}
+      >
+        thumbnail
+      </Button>
+    </Layout>
   )
 };
 

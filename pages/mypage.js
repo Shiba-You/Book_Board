@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
 import Article from "../components/article";
-import { getAllArticles, getAllArticlesUid } from "../utils/articles";
+import { getAllArticles, getAllArticlesUid } from "../utils/article";
 
 
 export default function Mypage(props) {
@@ -60,7 +60,6 @@ Mypage.getInitialProps = async ({ req, res }) => {
     };
   }
   if (!isServerSide) {
-    console.log(Router)
     const result = await fetch("../api/loggedIn");
     const json = (await result.json())
     if (!json.user) Router.push({pathname: "/login"});
