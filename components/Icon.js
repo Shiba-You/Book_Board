@@ -3,6 +3,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import SaveIcon from '@material-ui/icons/Save';
 import CreateIcon from '@material-ui/icons/Create';
+import BackspaceIcon from '@material-ui/icons/Backspace';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -17,6 +18,10 @@ export default function Button(props) {
     case 'add':
       return (
         <AddIcon className={classes.icon} />
+      )
+    case 'back':
+      return (
+        <BackspaceIcon className={classes.icon} />
       )
     case 'cancel':
       return (

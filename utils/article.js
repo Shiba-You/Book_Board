@@ -6,6 +6,7 @@ export const getAllArticles = (currentUser, setArticles) => {
   const docRef = db.collection('version/1/articles')
   docRef
     .where('user_uid', '==', currentUser.uid)
+    .orderBy("updateAt", "desc")
     .get()
     .then(snapshot => {
       let docs = [];

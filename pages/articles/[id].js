@@ -58,7 +58,7 @@ export default function ArticleDetail(props) {
             </Typography>
           </Grid>
         </Grid>
-        <FloatButton seed="cancel" position="1" />
+        <FloatButton seed="back" position="1" />
         <FloatButton
           seed="edit"
           position="0"

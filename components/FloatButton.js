@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 
 import Icon from './Icon'
-import { saveArticle, editArticle } from "../utils/article";
+import { saveArticle, editArticle } from '../utils/article';
+import { confirmAndBack } from '../utils/info';
 
 const useStyles = makeStyles(() => ({
   primaryPst: {
@@ -31,15 +32,18 @@ export default function FloatButton(props) {
   const router = useRouter();
   const { seed, position, artileTitle, content, currentuser, image, articleUid } = props;
   const classes = useStyles();
-  const bColor = seed == "cancel" ? "secondary" : "primary";
+  const bColor = seed == 'cancel' || seed == 'back' ? 'secondary' : 'primary';
   const pst = position == 0 ? classes.primaryPst : classes.secondaryPst;
   const action = () => {
     switch (seed) {
       case 'add':
         router.push('/new');
         break
+      case 'back':
+        router.push('/mypage');
+        break
       case 'cancel':
-        router.back();
+        confirmAndBack()
         break
       case 'save':
         saveArticle(artileTitle, content, currentuser, image);

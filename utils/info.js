@@ -6,3 +6,10 @@ export const alertAndRedirect = (msg, to) => {
     Router.push(to);
   }
 };
+
+export const confirmAndBack = () => {
+  const result = confirm('編集を頭中で終了してもよろしいですか？')
+  if (result) {
+    Router.back();
+  }
+};
