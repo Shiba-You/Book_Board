@@ -36,9 +36,7 @@ export default function Signup() {
 
   const createAccount = async (name, email, password) => {
     await signup(name, email, password)
-    router.push({
-      pathname: "/mypage",
-    });
+    router.push("/mypage");
   };
 
   return (
@@ -89,7 +87,7 @@ export default function Signup() {
               className={classes.btn}
               variant="contained"
               color="primary"
-              onClick={() => router.push({pathname: "/login"})}
+              onClick={() => router.push("/login")}
             >
               ログイン画面に戻る
             </Button>

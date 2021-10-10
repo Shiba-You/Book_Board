@@ -241,7 +241,7 @@ Profile.getInitialProps = async ({ req, res }) => {
   if (!isServerSide) {
     const result = await fetch("./api/loggedIn");
     const json = (await result.json())
-    if (!json.user) Router.push({ pathname: "/login" });
+    if (!json.user) Router.push("/login");
     return { 
       currentUser: (json.user || {}).currentUser || ""
     };

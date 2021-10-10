@@ -46,7 +46,6 @@ export default function UpLoad(props) {
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result);
-        console.log(reader.result)
       };
       reader.readAsDataURL(e[0]);
       handleClickOpen();

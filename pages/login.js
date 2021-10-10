@@ -77,7 +77,7 @@ export default function Login() {
               className={classes.btn}
               variant="contained"
               color="primary"
-              onClick={() => router.push({pathname: "/signup"})}
+              onClick={() => router.push("/signup")}
             >
               初めてのご利用はこちらから
             </Button>

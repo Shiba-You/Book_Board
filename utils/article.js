@@ -1,5 +1,6 @@
 import { db, storage } from '../pages/api/firebase';
 import { makeRnd } from './main';
+import { alertAndRedirect } from './info';
 
 export const getAllArticles = (currentUser, setArticles) => {
   const docRef = db.collection('version/1/articles')
@@ -21,7 +22,6 @@ export const getArticle = (uid, setArticleTitle, setThumbanil, setContent) => {
     .doc(uid)
     .get()
     .then(doc => {
-      // console.log(doc.data())
       setArticleTitle(doc.data().title);
       setThumbanil(doc.data().thumbanil);
       setContent(doc.data().content);
@@ -29,12 +29,12 @@ export const getArticle = (uid, setArticleTitle, setThumbanil, setContent) => {
 };
 
 export const saveImage = async (currentUser, image, imageTag) => {
-  if (image === "") {
+  if (image === '') {
     // TODO エラー処理
-    alert("サムネイルが選択されていません")
+    alert('サムネイルが選択されていません')
     return;
   }
-  const imageBase64 = image.replace(/[\s\S]*base64\,/ , "");
+  const imageBase64 = image.replace(/[\s\S]*base64\,/ , '');
   const storageRef = storage.ref(`images/${currentUser.uid}/`);
   const imagesRef = storageRef.child(imageTag);
 
@@ -62,6 +62,9 @@ export const saveArticle = (title, content, currentUser, image) => {
         createAt: new Date(),
         updateAt: new Date()
       });
+  }).then(() => {
+    const msg = '新規作成'
+    alertAndRedirect(msg, '/mypage')
   })
 };
 
@@ -74,7 +77,10 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
         title: title,
         content: content,
         updateAt: new Date()
-      });
+      }).then(() => {
+        const msg = '更新'
+        alertAndRedirect(msg, `/articles/${articleUid}`)
+      })
   } else {
     saveImage(currentUser, image, imageTag).then(storageUrl => {
       db.collection('version/1/articles')
@@ -85,6 +91,9 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
           content: content,
           updateAt: new Date()
         });
+    }).then(() => {
+      const msg = '更新'
+      alertAndRedirect(msg, `/articles/${articleUid}`)
     })
   }
 };

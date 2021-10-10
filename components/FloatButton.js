@@ -45,10 +45,10 @@ export default function FloatButton(props) {
         saveArticle(artileTitle, content, currentuser, image);
         break
       case 'edit':
-        router.push(`/articles/edit/${articleUid}`)
+        router.push(`/articles/edit/${articleUid}`);
         break
       case 'update':
-        editArticle(articleUid, artileTitle, content, currentuser, image)
+        editArticle(articleUid, artileTitle, content, currentuser, image);
         break
     }
 

@@ -6,6 +6,7 @@ export const makeRnd = (N) => {
   }
   return rand_str
 }
+
 export const timestampToTime = (timestamp) => {
   if (!timestamp) return
   const date = timestamp.toDate();
@@ -18,3 +19,4 @@ export const timestampToTime = (timestamp) => {
 
   return `${yyyy}/${MM}/${dd} ${HH}:${mm}:${ss}`;
 }
+
