@@ -67,14 +67,24 @@ export const saveArticle = (title, content, currentUser, image) => {
 
 export const editArticle = (articleUid, title, content, currentUser, image) => {
   const imageTag = makeRnd(16)
-  saveImage(currentUser, image, imageTag).then(storageUrl => {
+  if (~image.indexOf('firebasestorage')) {
     db.collection('version/1/articles')
       .doc(articleUid)
       .update({
-        thumbanil: storageUrl,
         title: title,
         content: content,
         updateAt: new Date()
       });
-  })
+  } else {
+    saveImage(currentUser, image, imageTag).then(storageUrl => {
+      db.collection('version/1/articles')
+        .doc(articleUid)
+        .update({
+          thumbanil: storageUrl,
+          title: title,
+          content: content,
+          updateAt: new Date()
+        });
+    })
+  }
 };

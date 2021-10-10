@@ -30,7 +30,6 @@ export default function UpLoad(props) {
   const classes = useStyles();
   const uploadInputRef = useRef(null);
   const { image, setImage } = props
-  const [originImage, setOriginImage] = useState();
   const [cropper, setCropper] = useState();
   const [open, setOpen] = useState(false);
 
@@ -43,11 +42,11 @@ export default function UpLoad(props) {
   };
 
   const onChange = (e) => {
-    console.log(e)
     if (e.length != 0) {
       const reader = new FileReader();
       reader.onload = () => {
-        setOriginImage(reader.result);
+        setImage(reader.result);
+        console.log(reader.result)
       };
       reader.readAsDataURL(e[0]);
       handleClickOpen();
@@ -115,7 +114,7 @@ export default function UpLoad(props) {
               className={classes.cropper}
               zoomTo={0.5}
               aspectRatio={9 / 16}
-              src={originImage}
+              src={image}
               responsive={true}
               onInitialized={(e) => {setCropper(e)}}
               guides={true}

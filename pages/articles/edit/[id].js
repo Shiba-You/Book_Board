@@ -6,12 +6,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
-// import { timestampToTime } from '../../utils/main';
 import { getArticle } from '../../../utils/article';
 import Layout from '../../../components/template/layout';
 import FloatButton from '../../../components/FloatButton';
 import UpLoad from '../../../components/Upload';
-import { toBase64Url } from '../../../utils/main';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,9 +39,6 @@ export default function ArticleDetail(props) {
   useEffect(() => {
     getArticle(router.query.id, setArticleTitle, setThumbanil, setContent)
   }, []);
-  const toBase64 = () => {
-    console.log(thumbanil)
-  }
 
 
   return (
@@ -79,7 +74,7 @@ export default function ArticleDetail(props) {
         position="1"
       />
       <FloatButton
-        seed="save"
+        seed="update"
         position="0"
         articleUid={router.query.id}
         currentuser={currentUser}
@@ -87,16 +82,6 @@ export default function ArticleDetail(props) {
         content={content}
         image={thumbanil}
       />
-      <Button
-        onClick={()=>toBase64()}
-      >
-        thumbnail
-      </Button>
-      <Button
-        onClick={()=>console.log(thumbanil)}
-      >
-        thumbnail
-      </Button>
     </Layout>
   )
 };
