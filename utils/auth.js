@@ -1,4 +1,4 @@
-import { auth } from '../pages/api/firebase';
+import { auth, db } from '../pages/api/firebase';
 
 export const login = async (email, password) => {
   try {
@@ -24,10 +24,16 @@ export const signup = async (name, email, password) => {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         const user = auth.currentUser;
-        return user.updateProfile({
-          displayName: name,
-          photoURL: ''
-        })
+        return Promise.all([
+          user.updateProfile({
+            displayName: name,
+          }),
+          db.collection('version/1/users')
+            .doc(user.uid)
+            .set({
+              articleCount: 0
+            })
+        ])
       })
     await login(email, password)
   } catch (error) {

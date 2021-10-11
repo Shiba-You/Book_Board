@@ -17,6 +17,10 @@ export default function Mypage(props) {
     getAllArticles(currentUser, setArticles)
   }, []);
 
+  const check = () => {
+    console.log(currentUser)
+  }
+
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
@@ -36,6 +40,11 @@ export default function Mypage(props) {
             )
           })
         )}
+        <Button
+        onClick={check()}
+      >
+        check
+      </Button>
       </Grid>
       <FloatButton seed="add" position="0" />
     </Layout>
