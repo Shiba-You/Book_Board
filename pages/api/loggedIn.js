@@ -18,6 +18,4 @@ export default async function meApi(req, res) {
       });
     })
     .catch(() => null);
-
-  // res.json(user ? { user: { email: user.email } } : {});
 }

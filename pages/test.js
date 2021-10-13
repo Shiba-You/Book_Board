@@ -9,56 +9,31 @@ import Article from "../components/article";
 import { getAllArticles, getAllArticlesUid } from "../utils/article";
 
 
-export default function Mypage(props) {
-  const { currentUser } = props;
-  const router = useRouter();
-  const [articles, setArticles] = useState([]);
-  const title = "Mypage";
-  useEffect(() => {
-    getAllArticles(currentUser, setArticles)
-  }, []);
+export default function Test(props) {
+  const { currentUser, pid } = props;
+  const title = "Test";
 
   const check = () => {
-    console.log(currentUser)
-    router.push({
-      pathname: 'new/',
-      query: { pid: "aaaaa" },
-    })
+    console.log(pid)
+    console.log(props)
   }
 
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
-      <Grid container spacing={3}>
-        {(
-          articles.map((article, i) => {
-            return (
-              <Grid key={i} item xs={12} md={6}>
-                <Article
-                  title={article.title}
-                  content={article.content}
-                  createAt={article.createAt}
-                  thumbanil={article.thumbanil}
-                  uid={article.uid}
-                />
-              </Grid>
-            )
-          })
-        )}
-        <Button
-          onClick={() => check()}
-        >
-        check
+      <p>テスト</p>
+      <Button
+       onClick={() => check()}
+      >
+        Check
       </Button>
-      </Grid>
-      <FloatButton seed="add" position="0" />
     </Layout>
   </>
   );
 }
 
 
-Mypage.getInitialProps = async ({ req, res }) => {
+Test.getInitialProps = async ({ req, res }) => {
   const isServerSide = typeof window === "undefined";
   if (isServerSide && req && res) {
     const root = "http://localhost:3000";
