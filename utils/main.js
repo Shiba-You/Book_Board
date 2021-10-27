@@ -20,3 +20,6 @@ export const timestampToTime = (timestamp) => {
   return `${yyyy}/${MM}/${dd} ${HH}:${mm}:${ss}`;
 }
 
+export const isObjEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
+}

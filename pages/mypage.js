@@ -5,8 +5,10 @@ import Button from '@material-ui/core/Button';
 
 import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
+import BottomPageNation from '../components/BottomPageNation';
 import Article from "../components/article";
-import { getAllArticles, getAllArticlesUid } from "../utils/article";
+import { getAllArticles } from "../utils/article";
+import { isObjEmpty } from "../utils/main";
 
 
 export default function Mypage(props) {
@@ -15,17 +17,10 @@ export default function Mypage(props) {
   const [articles, setArticles] = useState([]);
   const title = "Mypage";
   useEffect(() => {
-    getAllArticles(currentUser, setArticles)
+    if (isObjEmpty(router.query)) {
+      getAllArticles(currentUser, setArticles)
+    }
   }, []);
-
-  const check = () => {
-    console.log(currentUser)
-    router.push({
-      pathname: 'new/',
-      query: { pid: "aaaaa" },
-    })
-  }
-
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
@@ -45,11 +40,9 @@ export default function Mypage(props) {
             )
           })
         )}
-        <Button
-          onClick={() => check()}
-        >
-        check
-      </Button>
+      </Grid>
+      <Grid container spacing={3}>
+        <BottomPageNation />
       </Grid>
       <FloatButton seed="add" position="0" />
     </Layout>

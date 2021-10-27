@@ -1,4 +1,4 @@
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { useState } from "react";
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -19,12 +19,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function New(props) {
-  const { currentUser } = props
+  const { currentUser } = props;
+  const router = useRouter();
   const classes = useStyles();
   const title = "Add new Article";
   const [artileTitle, setArticleTitle] = useState("");
   const [content, setContent] = useState("");
   const [thumbanil, setThumbanil] = useState("");
+
+  
+  console.log(router.query)
 
   return(
   <>
