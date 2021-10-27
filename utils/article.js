@@ -8,6 +8,7 @@ export const getArticles = (currentUser, setArticles) => {
   docRef
     .where('user_uid', '==', currentUser.uid)
     .orderBy("updateAt", "desc")
+    .limit(3)       // TODO: 取得数を動的に変化 getArticlesCount と同期させる
     .get()
     .then(snapshot => {
       let docs = [];
@@ -18,7 +19,18 @@ export const getArticles = (currentUser, setArticles) => {
     })
 };
 
-// Articleの詳細を取得
+// Articleの長さ取得
+export const getArticlesCount = (currentUser, setArticlesCount) => {
+  const docRef = db.collection('version/1/users')
+  docRef
+    .doc(currentUser.uid)
+    .get()
+    .then(doc => {
+      setArticlesCount(Math.ceil(doc.data().articleCount/3))    // TODO: 取得数を動的に変化 getArticles と同期させる
+    })
+};
+
+// 単体Articleの詳細を取得
 export const getArticle = (uid, setArticleTitle, setThumbanil, setContent) => {
   const docRef = db.collection('version/1/articles')
   docRef
@@ -31,6 +43,7 @@ export const getArticle = (uid, setArticleTitle, setThumbanil, setContent) => {
     });
 };
 
+// Article画像の保存
 export const saveImage = async (currentUser, image, imageTag) => {
   if (image === '') {
     // TODO エラー処理
@@ -52,6 +65,7 @@ export const saveImage = async (currentUser, image, imageTag) => {
   })
 };
 
+// Articleの保存
 export const saveArticle = (title, content, currentUser, image) => {
   const imageTag = makeRnd(16)
   saveImage(currentUser, image, imageTag).then(storageUrl => {
@@ -71,6 +85,7 @@ export const saveArticle = (title, content, currentUser, image) => {
   })
 };
 
+// Articleの編集
 export const editArticle = (articleUid, title, content, currentUser, image) => {
   const imageTag = makeRnd(16)
   if (~image.indexOf('firebasestorage')) {

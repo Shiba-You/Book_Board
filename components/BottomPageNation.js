@@ -3,6 +3,7 @@ import { Router, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Pagination from '@material-ui/lab/Pagination';
 import { isObjEmpty } from '../utils/main';
+import { getArticlesCount } from '../utils/article';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,8 +13,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function  BottomPageNation(props) {
+  const { currentUser } = props;
   const classes = useStyles();
   const router = useRouter();
+  const [articlesCount, setArticlesCount] = useState();
+  useEffect(() => {
+    getArticlesCount(currentUser, setArticlesCount)
+  }, []);
   const handleChange = (e, page) => {
     router.push({
       pathname: 'mypage/',
@@ -24,7 +30,7 @@ export default function  BottomPageNation(props) {
   return (
     <div className={classes.root}>
       <Pagination
-        count={11}
+        count={articlesCount}
         page={Number(router.query.page)}
         onChange={handleChange}
         color="primary"

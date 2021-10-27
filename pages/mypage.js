@@ -39,7 +39,7 @@ export default function Mypage(props) {
         )}
       </Grid>
       <Grid container spacing={3}>
-        <BottomPageNation />
+        <BottomPageNation currentUser={currentUser}/>
       </Grid>
       <FloatButton seed="add" position="0" />
     </Layout>
