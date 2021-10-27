@@ -27,9 +27,6 @@ export default function New(props) {
   const [content, setContent] = useState("");
   const [thumbanil, setThumbanil] = useState("");
 
-  
-  console.log(router.query)
-
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
