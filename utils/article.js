@@ -2,7 +2,8 @@ import { db, storage } from '../pages/api/firebase';
 import { makeRnd } from './main';
 import { alertAndRedirect } from './info';
 
-export const getAllArticles = (currentUser, setArticles) => {
+// ログインユーザーのArticle一覧を取得
+export const getArticles = (currentUser, setArticles) => {
   const docRef = db.collection('version/1/articles')
   docRef
     .where('user_uid', '==', currentUser.uid)
@@ -17,6 +18,7 @@ export const getAllArticles = (currentUser, setArticles) => {
     })
 };
 
+// Articleの詳細を取得
 export const getArticle = (uid, setArticleTitle, setThumbanil, setContent) => {
   const docRef = db.collection('version/1/articles')
   docRef

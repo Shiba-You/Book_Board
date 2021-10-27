@@ -7,9 +7,8 @@ import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
 import BottomPageNation from '../components/BottomPageNation';
 import Article from "../components/article";
-import { getAllArticles } from "../utils/article";
-import { isObjEmpty } from "../utils/main";
-
+import { getArticles } from "../utils/article";
+// import { isObjEmpty } from "../utils/main";
 
 export default function Mypage(props) {
   const { currentUser } = props;
@@ -17,9 +16,7 @@ export default function Mypage(props) {
   const [articles, setArticles] = useState([]);
   const title = "Mypage";
   useEffect(() => {
-    if (isObjEmpty(router.query)) {
-      getAllArticles(currentUser, setArticles)
-    }
+    getArticles(currentUser, setArticles)
   }, []);
   return(
   <>
