@@ -34,7 +34,7 @@ export default function Mypage(props) {
         )}
       </Grid>
       <Grid container spacing={3}>
-        <BottomPageNation currentUser={currentUser} setArticles={setArticles}/>
+        <BottomPageNation currentUser={currentUser} setArticles={setArticles} />
       </Grid>
       <FloatButton seed="add" position="0" />
     </Layout>

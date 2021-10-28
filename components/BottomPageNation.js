@@ -23,8 +23,11 @@ export default function  BottomPageNation(props) {
     getArticlesCount(currentUser, setArticlesCount)
   }, []);
 
+  // articlesの初期化
   useEffect(() => {
     getArticles(currentUser, setArticles, 1)
+    return localStorage.clear("uid")                // TODO: localStorageの値をmypage退出時に削除する
+    // localStorage.setItem('uid', JSON.stringify(formData))
   }, []);
 
   const handleChange = (e, page) => {

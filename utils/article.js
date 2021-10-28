@@ -25,6 +25,7 @@ export const getArticles = (currentUser, setArticles, pageDif) => {
           }
         }
       });
+      localStorage.setItem('uid', JSON.stringify({"fuid": docs[0]["uid"], "luid": docs.slice(-1)[0]["uid"]}))
       setArticles(docs);
     })
 };
