@@ -2,8 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Router, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Pagination from '@material-ui/lab/Pagination';
-import { isObjEmpty } from '../utils/main';
+
 import { getArticlesCount } from '../utils/article';
+import { getArticles } from "../utils/article";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,14 +14,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function  BottomPageNation(props) {
-  const { currentUser } = props;
+  const { currentUser, setArticles } = props;
   const classes = useStyles();
   const router = useRouter();
   const [articlesCount, setArticlesCount] = useState();
+
   useEffect(() => {
     getArticlesCount(currentUser, setArticlesCount)
   }, []);
+
+  useEffect(() => {
+    getArticles(currentUser, setArticles, 1)
+  }, []);
+
   const handleChange = (e, page) => {
+    console.log(page, Number(router.query.page))
+    getArticles(currentUser, setArticles, Number(router.query.page)-page)
     router.push({
       pathname: 'mypage/',
       query: { page },

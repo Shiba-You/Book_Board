@@ -3,17 +3,22 @@ import { makeRnd } from './main';
 import { alertAndRedirect } from './info';
 
 // ログインユーザーのArticle一覧を取得
-export const getArticles = (currentUser, setArticles) => {
+export const getArticles = (currentUser, setArticles, pageDif) => {
+  const dif = getQueryParam(pageDif)
   const docRef = db.collection('version/1/articles')
   docRef
     .where('user_uid', '==', currentUser.uid)
     .orderBy("updateAt", "desc")
-    .limit(3)       // TODO: 取得数を動的に変化 getArticlesCount と同期させる
+    .limit(3*dif)       // TODO: 取得数を動的に変化 getArticlesCount と同期させる
     .get()
     .then(snapshot => {
       let docs = [];
+      let idx = 0;
       snapshot.forEach(doc => {
-        docs.push(Object.assign(doc.data(), {uid: doc.id}))
+        idx += 1
+        if (idx > 3*(dif-1)) {
+          docs.push(Object.assign(doc.data(), {uid: doc.id}))
+        }
       });
       setArticles(docs);
     })
@@ -115,3 +120,14 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
     })
   }
 };
+
+// page移動に伴うパラメータの変更
+const getQueryParam = (pageDif) => {
+  if (pageDif == 0) {
+    return 1
+  } else if (pageDif < 0) {
+    return Math.abs(pageDif)
+  } else {
+    return pageDif
+  }
+}

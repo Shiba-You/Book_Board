@@ -7,17 +7,12 @@ import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
 import BottomPageNation from '../components/BottomPageNation';
 import Article from "../components/article";
-import { getArticles } from "../utils/article";
-// import { isObjEmpty } from "../utils/main";
 
 export default function Mypage(props) {
   const { currentUser } = props;
   const router = useRouter();
   const [articles, setArticles] = useState([]);
   const title = "Mypage";
-  useEffect(() => {
-    getArticles(currentUser, setArticles)
-  }, []);
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
@@ -39,7 +34,7 @@ export default function Mypage(props) {
         )}
       </Grid>
       <Grid container spacing={3}>
-        <BottomPageNation currentUser={currentUser}/>
+        <BottomPageNation currentUser={currentUser} setArticles={setArticles}/>
       </Grid>
       <FloatButton seed="add" position="0" />
     </Layout>
