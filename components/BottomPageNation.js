@@ -29,7 +29,7 @@ export default function  BottomPageNation(props) {
 
   const handleChange = (e, page) => {
     console.log(page, Number(router.query.page))
-    getArticles(currentUser, setArticles, Number(router.query.page)-page)
+    getArticles(currentUser, setArticles, page-Number(router.query.page))
     router.push({
       pathname: 'mypage/',
       query: { page },
