@@ -28,10 +28,10 @@ const useStyles = makeStyles({
 export default function Article(props) {
   const classes = useStyles();
   const router = useRouter();
-  const { title, content, createAt, thumbanil, uid} = props
+  const { title, content, createAt, thumbanil, uid, page} = props
 
   return (
-    <Card className={classes.root} onClick={() => router.push(`/articles/${uid}`)}>
+    <Card className={classes.root} onClick={() => router.push({pathname: `/articles/${uid}`, query:{page}})}>
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={4} md={3}>

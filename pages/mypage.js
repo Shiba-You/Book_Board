@@ -27,6 +27,7 @@ export default function Mypage(props) {
                   createAt={article.createAt}
                   thumbanil={article.thumbanil}
                   uid={article.uid}
+                  page={router.query.page}
                 />
               </Grid>
             )

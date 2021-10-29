@@ -30,28 +30,6 @@ export const getArticles = (currentUser, setArticles, pageDif) => {
     })
 };
 
-// // ログインユーザーのArticle一覧を取得
-// export const getArticles = (currentUser, setArticles, pageDif) => {
-//   const dif = getQueryParam(pageDif)
-//   const docRef = db.collection('version/1/articles')
-//   docRef
-//     .where('user_uid', '==', currentUser.uid)
-//     .orderBy("updateAt", "desc")
-//     .limit(3*dif)       // TODO: 取得数を動的に変化 getArticlesCount と同期させる
-//     .get()
-//     .then(snapshot => {
-//       let docs = [];
-//       let idx = 0;
-//       snapshot.forEach(doc => {
-//         idx += 1
-//         if (idx > 3*(dif-1)) {
-//           docs.push(Object.assign(doc.data(), {uid: doc.id}))
-//         }
-//       });
-//       setArticles(docs);
-//     })
-// };
-
 // Articleの長さ取得
 export const getArticlesCount = (currentUser, setArticlesCount) => {
   const docRef = db.collection('version/1/users')

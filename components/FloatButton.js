@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
 
 export default function FloatButton(props) {
   const router = useRouter();
-  const { seed, position, artileTitle, content, currentuser, image, articleUid } = props;
+  const { seed, position, artileTitle, content, currentuser, image, articleUid} = props;
   const classes = useStyles();
   const bColor = seed == 'cancel' || seed == 'back' ? 'secondary' : 'primary';
   const pst = position == 0 ? classes.primaryPst : classes.secondaryPst;
@@ -42,7 +42,7 @@ export default function FloatButton(props) {
       case 'back':
         router.push({
           pathname: '/mypage',
-          query: {page: 1}        // TODO: article 表示 page を取得
+          query: {page: router.query.page}        // TODO: article 表示 page を取得
         });
         break
       case 'cancel':
