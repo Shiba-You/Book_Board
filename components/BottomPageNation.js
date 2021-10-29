@@ -24,13 +24,6 @@ export default function  BottomPageNation(props) {
     getArticles(currentUser, setArticles, 1)
   }, []);
 
-  // articlesの初期化
-  useEffect(() => {
-    // return localStorage.clear("uid")                // TODO: localStorageの値をmypage退出時に削除する
-    localStorage.removeItem("uid")
-    // localStorage.setItem('uid', JSON.stringify(formData))
-  }, []);
-
   const handleChange = (e, page) => {
     console.log(page, Number(router.query.page))
     getArticles(currentUser, setArticles, page-Number(router.query.page))
