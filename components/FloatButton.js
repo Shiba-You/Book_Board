@@ -40,7 +40,10 @@ export default function FloatButton(props) {
         router.push('/new');
         break
       case 'back':
-        router.push('/mypage');
+        router.push({
+          pathname: '/mypage',
+          query: {page: 1}        // TODO: article 表示 page を取得
+        });
         break
       case 'cancel':
         confirmAndBack()

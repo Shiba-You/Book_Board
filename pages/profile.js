@@ -123,7 +123,7 @@ export default function Profile(props) {
             className={classes.btn}
             variant="contained"
             color="primary"
-            onClick = {() => {router.push('/mypage')}}
+            onClick = {() => {router.push({pathname: '/mypage', query: {page: 1}})}}
           >
             戻る
           </Button>
