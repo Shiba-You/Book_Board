@@ -21,11 +21,10 @@ export default function  BottomPageNation(props) {
 
   useEffect(() => {
     getArticlesCount(currentUser, setArticlesCount)
-    getArticles(currentUser, setArticles, 1)
+    getArticles(currentUser, setArticles, 0)
   }, []);
 
   const handleChange = (e, page) => {
-    console.log(page, Number(router.query.page))
     getArticles(currentUser, setArticles, page-Number(router.query.page))
     router.push({
       pathname: 'mypage/',

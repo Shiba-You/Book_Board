@@ -6,16 +6,21 @@ import { alertAndRedirect } from './info';
 export const getArticles = (currentUser, setArticles, pageDif) => {
   const difAndOrder = getQueryParam(pageDif)
   const docRef = db.collection('version/1/articles')
+  console.log(pageDif, difAndOrder)
+  console.log(localStorage.getItem('orderAt'))
+  const __k = {"nanoseconds": 570000000, "seconds": 1635350005}
+  // console.log(db.TimeStamp.fromDate())
   docRef
     .where('user_uid', '==', currentUser.uid)
-    .orderBy("updateAt", difAndOrder[1])
+    .orderBy("updateAt", difAndOrder[1]) // .orderBy("updateAt", difAndOrder[1])
+    .startAfter(db.fromDate(difAndOrder[2]))
     .limit(3*difAndOrder[0])       // TODO: 取得数を動的に変化 getArticlesCount と同期させる
     .get()
     .then(snapshot => {
       let docs = [];
       let idx = 0;
-      console.log(pageDif, difAndOrder)
       snapshot.forEach(doc => {
+        console.log("doc  :", doc.data())
         idx += 1
         if (idx > 3*(difAndOrder[0]-1)) {
           if (difAndOrder[1] == "desc") {
@@ -25,7 +30,11 @@ export const getArticles = (currentUser, setArticles, pageDif) => {
           }
         }
       });
-      localStorage.setItem('uid', JSON.stringify({"fuid": docs[0]["uid"], "luid": docs.slice(-1)[0]["uid"]}))
+      // localStorage.setItem('orderAt', JSON.stringify({"fAt": docs[0]["updateAt"], "lAt": docs.slice(-1)[0]["updateAt"]}))
+      console.log(docs[2]["updateAt"])
+
+      localStorage.setItem('fAt', JSON.stringify(docs[0]["updateAt"]));
+      localStorage.setItem('lAt', JSON.stringify(docs.slice(-1)[0]["updateAt"]));
       setArticles(docs);
     })
 };
@@ -130,10 +139,10 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
 // page移動に伴うパラメータの変更
 const getQueryParam = (pageDif) => {
   if (pageDif == 0) {
-    return [1, "desc"]
+    return [1, "desc", {"nanoseconds": 0, "seconds": 0}]
   } else if (pageDif < 0) {
-    return [Math.abs(pageDif), "asc"]
+    return [Math.abs(pageDif), "asc", JSON.parse(localStorage.getItem('fAt'))]
   } else {
-    return [pageDif, "desc"]
+    return [pageDif, "desc", JSON.parse(localStorage.getItem('lAt'))]
   }
 }
