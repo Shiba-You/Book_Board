@@ -42,7 +42,7 @@ export default function New(props) {
           />
         </Grid>
         <Grid item md={3}>
-          <UpLoad currentUser={currentUser} image={thumbanil} setImage={setThumbanil} />
+          <UpLoad currentUser={currentUser} image={thumbanil} setImage={setThumbanil} square={false} />
         </Grid>
         <Grid item md={9}>
           <TextField

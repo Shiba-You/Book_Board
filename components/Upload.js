@@ -9,8 +9,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
-  drop: {
+  rectangleCrops: {
     "padding": "56.25% 0",
+    "top": 0,
+  },
+  squareCrops: {
     "top": 0,
   },
   img: {
@@ -27,9 +30,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UpLoad(props) {
+  const { image, setImage, square } = props
   const classes = useStyles();
   const uploadInputRef = useRef(null);
-  const { image, setImage } = props
   const [cropper, setCropper] = useState();
   const [open, setOpen] = useState(false);
 
@@ -58,25 +61,32 @@ export default function UpLoad(props) {
     }
     handleClose();
   };
+  console.log(square)
 
   return (
     <div>
       <div>
-        {!image && (
-          <div 
-            className={classes.dropRoot}
-          >
+        {!image ? (
+          !square ? (
             <DropzoneArea
-              dropzoneClass={classes.drop}
+              dropzoneClass={classes.rectangleCrops}
               showPreviewsInDropzone={false}
               acceptedFiles={['image/*']}
               dropzoneText={"サムネイルを選択"}
               filesLimit={1}
               onChange={(e) => onChange(e)}
             />
-          </div>
-        )}
-        {image && (
+          ) : (
+            <DropzoneArea
+              dropzoneClass={classes.squareCrops}
+              showPreviewsInDropzone={false}
+              acceptedFiles={['image/*']}
+              dropzoneText={"サムネイルを選択"}
+              filesLimit={1}
+              onChange={(e) => onChange(e)}
+            />
+          )
+        ) : (
           <>
             <img
               className={classes.img}

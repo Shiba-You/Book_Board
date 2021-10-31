@@ -12,6 +12,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 import Layout from '../components/template/layout';
 import { changeNameAndPhotoURL, changeEmail, changePassword, reLogin } from '../utils/profile'
+import UpLoad from '../components/Upload';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -96,7 +97,11 @@ export default function Profile(props) {
             Edit Profile
           </Typography>
         </Grid>
-        <Grid container item xs={12}>
+        <Grid item md={3}>
+          {/* <UpLoad currentUser={currentUser} image={thumbanil} setImage={setThumbanil} /> */}
+          <UpLoad currentUser={currentUser} square={true} />
+        </Grid>
+        <Grid item xs={9}>
           <TextField
             className={classes.text}
             label="name"
@@ -107,7 +112,7 @@ export default function Profile(props) {
             onChange={(e) => setName(e.target.value)}
           />
         </Grid>
-        <Grid container item xs={12}>
+        <Grid item xs={9}>
           <TextField
             className={classes.text}
             label="email"
