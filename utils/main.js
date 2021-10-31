@@ -1,11 +1,13 @@
+import { timestamp } from '../pages/api/firebase';
+
 export const makeRnd = (N) => {
   let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let rand_str = '';
   for ( var i = 0; i < N; i++ ) {
     rand_str += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
+  };
   return rand_str
-}
+};
 
 export const timestampToTime = (timestamp) => {
   if (!timestamp) return
@@ -18,8 +20,12 @@ export const timestampToTime = (timestamp) => {
   const ss = `0${date.getSeconds()}`.slice(-2);
 
   return `${yyyy}/${MM}/${dd} ${HH}:${mm}:${ss}`;
-}
+};
 
 export const isObjEmpty = (obj) => {
   return Object.keys(obj).length === 0;
-}
+};
+
+export const firebaseTimeToDate = (obj) => {
+  return new Date(obj.updateAt.seconds*1e3  + obj.updateAt.nanoseconds/1e5)
+};

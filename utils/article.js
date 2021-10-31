@@ -1,19 +1,20 @@
-import { db, storage } from '../pages/api/firebase';
-import { makeRnd } from './main';
+import { db, timestamp, storage } from '../pages/api/firebase';
+import { makeRnd, firebaseTimeToDate } from './main';
 import { alertAndRedirect } from './info';
 
 // ログインユーザーのArticle一覧を取得
 export const getArticles = (currentUser, setArticles, pageDif) => {
   const difAndOrder = getQueryParam(pageDif)
   const docRef = db.collection('version/1/articles')
-  console.log(pageDif, difAndOrder)
-  console.log(localStorage.getItem('orderAt'))
-  const __k = {"nanoseconds": 570000000, "seconds": 1635350005}
-  // console.log(db.TimeStamp.fromDate())
+  console.log("================ before ================")
+  console.log("pageDif :", pageDif)
+  console.log("JSON fAt  :", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('fAt')))))
+  console.log("JSON lAt  :", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('lAt')))))
+  console.log("difAndOrder :", difAndOrder)
   docRef
     .where('user_uid', '==', currentUser.uid)
     .orderBy("updateAt", difAndOrder[1]) // .orderBy("updateAt", difAndOrder[1])
-    .startAfter(db.fromDate(difAndOrder[2]))
+    .startAfter(difAndOrder[2])
     .limit(3*difAndOrder[0])       // TODO: 取得数を動的に変化 getArticlesCount と同期させる
     .get()
     .then(snapshot => {
@@ -21,6 +22,7 @@ export const getArticles = (currentUser, setArticles, pageDif) => {
       let idx = 0;
       snapshot.forEach(doc => {
         console.log("doc  :", doc.data())
+        console.log(difAndOrder[2] == doc.data().updateAt)
         idx += 1
         if (idx > 3*(difAndOrder[0]-1)) {
           if (difAndOrder[1] == "desc") {
@@ -30,11 +32,14 @@ export const getArticles = (currentUser, setArticles, pageDif) => {
           }
         }
       });
-      // localStorage.setItem('orderAt', JSON.stringify({"fAt": docs[0]["updateAt"], "lAt": docs.slice(-1)[0]["updateAt"]}))
-      console.log(docs[2]["updateAt"])
-
-      localStorage.setItem('fAt', JSON.stringify(docs[0]["updateAt"]));
-      localStorage.setItem('lAt', JSON.stringify(docs.slice(-1)[0]["updateAt"]));
+      // sessionStorage.setItem('orderAt', JSON.stringify({"fAt": docs[0]["updateAt"], "lAt": docs.slice(-1)[0]["updateAt"]}))
+      sessionStorage.setItem('fAt', JSON.stringify(firebaseTimeToDate(docs[0])));
+      sessionStorage.setItem('lAt', JSON.stringify(firebaseTimeToDate(docs.slice(-1)[0])));
+      console.log("================ after ================")
+      console.log("pageDif :", pageDif)
+      console.log("JSON fAt  :", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('fAt')))))
+      console.log("JSON lAt  :", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('lAt')))))
+      console.log("difAndOrder :", difAndOrder)
       setArticles(docs);
     })
 };
@@ -139,10 +144,11 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
 // page移動に伴うパラメータの変更
 const getQueryParam = (pageDif) => {
   if (pageDif == 0) {
-    return [1, "desc", {"nanoseconds": 0, "seconds": 0}]
+    return [1, "desc", {"seconds": 0, "nanoseconds": 0}]
   } else if (pageDif < 0) {
-    return [Math.abs(pageDif), "asc", JSON.parse(localStorage.getItem('fAt'))]
+    return [Math.abs(pageDif), "asc", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('fAt'))))]
   } else {
-    return [pageDif, "desc", JSON.parse(localStorage.getItem('lAt'))]
+    return [pageDif, "desc", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('lAt'))))]
   }
 }
+
