@@ -52,7 +52,6 @@ export default function Profile(props) {
   const [newPasswordValid, setNewPasswordValid] = useState('');
   const [open, setOpen] = useState(false);
   const title = "Profile";
-  console.log(currentUser)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -64,7 +63,7 @@ export default function Profile(props) {
 
   const updateProfile = async (name, email, password, thumbanil) => {
     let flag = false
-    if ((name != currentUser.name  && name) || (thumbanil != currentUser.photoURL)) {
+    if ((name != currentUser.name  && name) || (thumbanil != currentUser.picture)) {
       await changeNameAndPhotoURL(name, thumbanil)
       flag = true
     }

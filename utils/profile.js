@@ -7,7 +7,6 @@ export const changeNameAndPhotoURL = async (name, thumbanil) => {
   const imageTag = makeRnd(16)
   try {
     await saveImage(user, thumbanil, imageTag).then(storageUrl => {
-      console.log(storageUrl)
       user.updateProfile({
         displayName: name,
         photoURL: storageUrl
