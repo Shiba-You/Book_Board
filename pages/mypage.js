@@ -2,21 +2,29 @@ import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
 import BottomPageNation from '../components/BottomPageNation';
 import Article from "../components/article";
 
+const useStyles = makeStyles(() => ({
+  root: {
+    marginTop: 100,
+  },
+}));
+
 export default function Mypage(props) {
   const { currentUser } = props;
   const router = useRouter();
+  const classes = useStyles();
   const [articles, setArticles] = useState([]);
   const title = "Mypage";
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className={classes.root}>
         {(
           articles.map((article, i) => {
             return (
