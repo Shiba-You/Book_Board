@@ -46,7 +46,7 @@ export default function Profile(props) {
   const router = useRouter();
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
-  const [photo, setPhoto] = useState(currentUser.photo);
+  const [thumbanil, setThumbanil] = useState(currentUser?.photo);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordValid, setNewPasswordValid] = useState('');
@@ -98,8 +98,7 @@ export default function Profile(props) {
           </Typography>
         </Grid>
         <Grid item md={3}>
-          {/* <UpLoad currentUser={currentUser} image={thumbanil} setImage={setThumbanil} /> */}
-          <UpLoad currentUser={currentUser} square={true} />
+          <UpLoad currentUser={currentUser} image={thumbanil} setImage={setThumbanil} square={true} />
         </Grid>
         <Grid container item xs={9}>
         <Grid container item >

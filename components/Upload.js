@@ -35,6 +35,7 @@ export default function UpLoad(props) {
   const uploadInputRef = useRef(null);
   const [cropper, setCropper] = useState();
   const [open, setOpen] = useState(false);
+  const ratio = square ? 1 / 1 : 9 / 16
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -62,6 +63,8 @@ export default function UpLoad(props) {
     handleClose();
   };
   console.log(square)
+
+  
 
   return (
     <div>
@@ -122,7 +125,7 @@ export default function UpLoad(props) {
             <Cropper
               className={classes.cropper}
               zoomTo={0.5}
-              aspectRatio={9 / 16}
+              aspectRatio={ratio}
               src={image}
               responsive={true}
               onInitialized={(e) => {setCropper(e)}}
