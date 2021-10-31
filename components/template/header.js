@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Avatar } from "@material-ui/core";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -61,15 +61,17 @@ export default function Header(props) {
           </Typography>
           {currentUser && (
             <div>
-              <Typography variant="button" className={classes.title}>
-                {currentUser.name}
-              </Typography>
-              <IconButton
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              <a onClick={handleMenu}>
+                <Typography variant="button" className={classes.title}>
+                  {currentUser.name}
+                </Typography>
+                <IconButton
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <Avatar src={currentUser.picture} />
+                </IconButton>
+              </a>
               <Menu
                 anchorEl={anchorEl}
                 anchorOrigin={{
