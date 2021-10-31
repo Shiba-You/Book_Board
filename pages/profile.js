@@ -101,46 +101,48 @@ export default function Profile(props) {
           {/* <UpLoad currentUser={currentUser} image={thumbanil} setImage={setThumbanil} /> */}
           <UpLoad currentUser={currentUser} square={true} />
         </Grid>
-        <Grid item xs={9}>
-          <TextField
-            className={classes.text}
-            label="name"
-            autoComplete="current-password"
-            variant="outlined"
-            margin="dense"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={9}>
-          <TextField
-            className={classes.text}
-            label="email"
-            autoComplete="current-password"
-            variant="outlined"
-            margin="dense"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Grid>
-        <Grid container item sm={6} xs={12}>
-          <Button
-            className={classes.btn}
-            variant="contained"
-            color="primary"
-            onClick = {() => {router.push({pathname: '/mypage', query: {page: 1}})}}
-          >
-            戻る
-          </Button>
-        </Grid>
-        <Grid container item sm={6} xs={12}>
-          <Button
-            className={classes.btn}
-            variant="contained"
-            onClick = {handleClickOpen}
-          >
-            更新
-          </Button>
+        <Grid container item xs={9}>
+        <Grid container item >
+            <TextField
+              className={classes.text}
+              label="name"
+              autoComplete="current-password"
+              variant="outlined"
+              margin="dense"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Grid>
+          <Grid container item >
+            <TextField
+              className={classes.text}
+              label="email"
+              autoComplete="current-password"
+              variant="outlined"
+              margin="dense"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Grid>
+          <Grid container item sm={6} xs={12}>
+            <Button
+              className={classes.btn}
+              variant="contained"
+              color="primary"
+              onClick = {() => {router.push({pathname: '/mypage', query: {page: 1}})}}
+            >
+              戻る
+            </Button>
+          </Grid>
+          <Grid container item sm={6} xs={12}>
+            <Button
+              className={classes.btn}
+              variant="contained"
+              onClick = {handleClickOpen}
+            >
+              更新
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
       <hr className={classes.bar} />
