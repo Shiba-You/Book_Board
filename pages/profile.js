@@ -46,12 +46,13 @@ export default function Profile(props) {
   const router = useRouter();
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
-  const [thumbanil, setThumbanil] = useState(currentUser?.photo);
+  const [thumbanil, setThumbanil] = useState(currentUser?.picture);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordValid, setNewPasswordValid] = useState('');
   const [open, setOpen] = useState(false);
   const title = "Profile";
+  console.log(currentUser)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -61,11 +62,10 @@ export default function Profile(props) {
     setOpen(false);
   };
 
-  const updateProfile = async (name, email, password) => {
+  const updateProfile = async (name, email, password, thumbanil) => {
     let flag = false
-    if (name != currentUser.name  && name) {
-      // await changeNameAndPhotoURL(name, photoURL)
-      await changeNameAndPhotoURL(name)
+    if ((name != currentUser.name  && name) || (thumbanil != currentUser.photoURL)) {
+      await changeNameAndPhotoURL(name, thumbanil)
       flag = true
     }
     if (email != currentUser.email && email) {
@@ -216,7 +216,7 @@ export default function Profile(props) {
             戻る
           </Button>
           <Button
-            onClick={() => updateProfile(name, email, password)}
+            onClick={() => updateProfile(name, email, password, thumbanil)}
             color="primary"
           >
             保存

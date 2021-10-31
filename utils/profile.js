@@ -1,11 +1,17 @@
 import { auth } from '../pages/api/firebase';
+import { saveImage } from './article';
+import { makeRnd } from './main';
 
-export const changeNameAndPhotoURL = async (name) => {
+export const changeNameAndPhotoURL = async (name, thumbanil) => {
   const user = auth.currentUser;
+  const imageTag = makeRnd(16)
   try {
-    await user.updateProfile({
-      displayName: name
-      // photoURL: 
+    await saveImage(user, thumbanil, imageTag).then(storageUrl => {
+      console.log(storageUrl)
+      user.updateProfile({
+        displayName: name,
+        photoURL: storageUrl
+      })
     })
   } catch (error) {
     alert(error);
