@@ -35,11 +35,6 @@ export default function  BottomPageNation(props) {
     f();
   }, []);
 
-  // useEffect(() => {
-  //   getArticlesCount(currentUser, , PAGE_COUNT)
-  //   getArticles(currentUser, setArticles, 0)
-  // }, []);
-
   const handleChange = async (e, page) => {
     const nextArticles = await getArticles(currentUser, page, PAGE_COUNT)
     setArticles(nextArticles)
