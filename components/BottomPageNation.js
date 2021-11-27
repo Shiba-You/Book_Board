@@ -30,7 +30,6 @@ export default function  BottomPageNation(props) {
       ])
       setArticles(articles)
       setPageCount(pageCount)
-      console.log(articles)
     }
     f();
   }, []);
