@@ -3,57 +3,79 @@ import { makeRnd, firebaseTimeToDate } from './main';
 import { alertAndRedirect } from './info';
 
 // ログインユーザーのArticle一覧を取得
-export const getArticles = (currentUser, setArticles, pageDif) => {
-  const difAndOrder = getQueryParam(pageDif)
-  const docRef = db.collection('version/1/articles')
-  console.log("================ before ================")
-  console.log("pageDif :", pageDif)
-  console.log("JSON fAt  :", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('fAt')))))
-  console.log("JSON lAt  :", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('lAt')))))
-  console.log("difAndOrder :", difAndOrder)
-  docRef
+export const getArticles = async (currentUser, page, articleCount) => {
+  const articleRef = db.collection('version/1/articles');
+  const limit = (page + 1) * articleCount;
+  const docs = []
+
+  const snapshot = await articleRef
     .where('user_uid', '==', currentUser.uid)
-    .orderBy("updateAt", difAndOrder[1]) // .orderBy("updateAt", difAndOrder[1])
-    .startAfter(difAndOrder[2])
-    .limit(3*difAndOrder[0])       // TODO: 取得数を動的に変化 getArticlesCount と同期させる
+    .orderBy("updateAt", "desc") // .orderBy("updateAt", difAndOrder[1])
+    .limit(limit)       // TODO: 取得数を動的に変化 getArticlesCount と同期させる  // get: limitの件数は変えないほうがいい
     .get()
-    .then(snapshot => {
-      let docs = [];
-      let idx = 0;
-      snapshot.forEach(doc => {
-        console.log("doc  :", doc.data())
-        console.log(difAndOrder[2] == doc.data().updateAt)
-        idx += 1
-        if (idx > 3*(difAndOrder[0]-1)) {
-          if (difAndOrder[1] == "desc") {
-            docs.push(Object.assign(doc.data(), {uid: doc.id}))
-          } else if (difAndOrder[1] == "asc") {
-            docs.unshift(Object.assign(doc.data(), {uid: doc.id}))
-          }
-        }
-      });
-      // sessionStorage.setItem('orderAt', JSON.stringify({"fAt": docs[0]["updateAt"], "lAt": docs.slice(-1)[0]["updateAt"]}))
-      sessionStorage.setItem('fAt', JSON.stringify(firebaseTimeToDate(docs[0])));
-      sessionStorage.setItem('lAt', JSON.stringify(firebaseTimeToDate(docs.slice(-1)[0])));
-      console.log("================ after ================")
-      console.log("pageDif :", pageDif)
-      console.log("JSON fAt  :", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('fAt')))))
-      console.log("JSON lAt  :", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('lAt')))))
-      console.log("difAndOrder :", difAndOrder)
-      setArticles(docs);
-    })
+
+  snapshot.forEach(doc => {
+    docs.push({...doc.data(), uid: doc.id})
+  });
+
+  
+  return docs;
 };
 
+
+
+// export const getArticles = (currentUser, setArticles, pageDif) => {
+//   const difAndOrder = getQueryParam(pageDif)
+//   const docRef = db.collection('version/1/articles')
+//   docRef
+//     .where('user_uid', '==', currentUser.uid)
+//     .orderBy("updateAt", difAndOrder[1]) // .orderBy("updateAt", difAndOrder[1])
+//     .startAfter(difAndOrder[2])
+//     .limit(3*difAndOrder[0])       // TODO: 取得数を動的に変化 getArticlesCount と同期させる  // get: limitの件数は変えないほうがいい
+//     .get()
+//     .then(snapshot => {
+//       let docs = [];
+//       let idx = 0;
+//       snapshot.forEach(doc => {
+//         console.log("doc  :", doc.data())
+//         console.log(difAndOrder[2] == doc.data().updateAt)
+//         idx += 1
+//         if (idx >= 3*(difAndOrder[0]-1)) {
+//           if (difAndOrder[1] == "desc") {
+//             docs.push(Object.assign(doc.data(), {uid: doc.id}))
+//           } else if (difAndOrder[1] == "asc") {
+//             docs.unshift(Object.assign(doc.data(), {uid: doc.id}))
+//           }
+//         }
+//       });
+//       sessionStorage.setItem('fAt', JSON.stringify(firebaseTimeToDate(docs[0])));
+//       sessionStorage.setItem('lAt', JSON.stringify(firebaseTimeToDate(docs.slice(-1)[0])));
+//       setArticles(docs);
+//     })
+// };
+
 // Articleの長さ取得
-export const getArticlesCount = (currentUser, setArticlesCount) => {
-  const docRef = db.collection('version/1/users')
-  docRef
+export const getPageCount = async (currentUser, size) => {
+  const userRef = db.collection('version/1/users')
+
+  const snapshot = await userRef
     .doc(currentUser.uid)
-    .get()
-    .then(doc => {
-      setArticlesCount(Math.ceil(doc.data().articleCount/3))    // TODO: 取得数を動的に変化 getArticles と同期させる
-    })
+    .get();
+
+  const { articleCount } = snapshot.data();
+
+  return Math.ceil(articleCount / size)
 };
+
+// export const getArticlesCount = (currentUser, setArticlesCount) => {
+//   const docRef = db.collection('version/1/users')
+//   docRef
+//     .doc(currentUser.uid)
+//     .get()
+//     .then(doc => {
+//       setArticlesCount(Math.ceil(doc.data().articleCount/3))    // TODO: 取得数を動的に変化 getArticles と同期させる
+//     })
+// };
 
 // 単体Articleの詳細を取得
 export const getArticle = (uid, setArticleTitle, setThumbanil, setContent) => {
