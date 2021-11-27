@@ -7,56 +7,23 @@ export const getArticles = async (currentUser, page, articleCount) => {
   const articleRef = db.collection('version/1/articles');
   const limit = page * articleCount;
   const docs = []
-
-  console.log("limit  : ", limit)
-  console.log("page   : ", page)
+  let limitIndex = 0
 
   const snapshot = await articleRef
     .where('user_uid', '==', currentUser.uid)
-    .orderBy("updateAt", "desc") // .orderBy("updateAt", difAndOrder[1])
-    .limit(limit)       // TODO: 取得数を動的に変化 getArticlesCount と同期させる  // get: limitの件数は変えないほうがいい
+    .orderBy("updateAt", "desc")
+    .limit(limit)
     .get()
 
   snapshot.forEach(doc => {
-    docs.push({...doc.data(), uid: doc.id})
+    limitIndex += 1
+    if (limitIndex > (page - 1) * articleCount) {
+      docs.push({...doc.data(), uid: doc.id})
+    }
   });
-
-  console.log(docs)
 
   return docs;
 };
-
-
-
-// export const getArticles = (currentUser, setArticles, pageDif) => {
-//   const difAndOrder = getQueryParam(pageDif)
-//   const docRef = db.collection('version/1/articles')
-//   docRef
-//     .where('user_uid', '==', currentUser.uid)
-//     .orderBy("updateAt", difAndOrder[1]) // .orderBy("updateAt", difAndOrder[1])
-//     .startAfter(difAndOrder[2])
-//     .limit(3*difAndOrder[0])       // TODO: 取得数を動的に変化 getArticlesCount と同期させる  // get: limitの件数は変えないほうがいい
-//     .get()
-//     .then(snapshot => {
-//       let docs = [];
-//       let idx = 0;
-//       snapshot.forEach(doc => {
-//         console.log("doc  :", doc.data())
-//         console.log(difAndOrder[2] == doc.data().updateAt)
-//         idx += 1
-//         if (idx >= 3*(difAndOrder[0]-1)) {
-//           if (difAndOrder[1] == "desc") {
-//             docs.push(Object.assign(doc.data(), {uid: doc.id}))
-//           } else if (difAndOrder[1] == "asc") {
-//             docs.unshift(Object.assign(doc.data(), {uid: doc.id}))
-//           }
-//         }
-//       });
-//       sessionStorage.setItem('fAt', JSON.stringify(firebaseTimeToDate(docs[0])));
-//       sessionStorage.setItem('lAt', JSON.stringify(firebaseTimeToDate(docs.slice(-1)[0])));
-//       setArticles(docs);
-//     })
-// };
 
 // Articleの長さ取得
 export const getPageCount = async (currentUser, size) => {
