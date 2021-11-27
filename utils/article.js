@@ -5,8 +5,11 @@ import { alertAndRedirect } from './info';
 // ログインユーザーのArticle一覧を取得
 export const getArticles = async (currentUser, page, articleCount) => {
   const articleRef = db.collection('version/1/articles');
-  const limit = (page + 1) * articleCount;
+  const limit = page * articleCount;
   const docs = []
+
+  console.log("limit  : ", limit)
+  console.log("page   : ", page)
 
   const snapshot = await articleRef
     .where('user_uid', '==', currentUser.uid)
@@ -18,7 +21,8 @@ export const getArticles = async (currentUser, page, articleCount) => {
     docs.push({...doc.data(), uid: doc.id})
   });
 
-  
+  console.log(docs)
+
   return docs;
 };
 
