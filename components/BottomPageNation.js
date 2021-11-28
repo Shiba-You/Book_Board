@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Pagination from '@material-ui/lab/Pagination';
 
 import { getPageCount } from '../utils/article';
-// import { getArticlesCount } from '../utils/article';
 import { getArticles } from "../utils/article";
 
 const useStyles = makeStyles((theme) => ({
