@@ -5,9 +5,12 @@ import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 
+import { searchArticle } from ""
+
 export default function  SearchWindow(props) {
   // const router = useRouter();
   const searchLabel = "検索"
+  const [searchWord, setSearchWord] = useState("");
 
   return (
     <Grid container justifyContent="flex-end">
@@ -16,6 +19,8 @@ export default function  SearchWindow(props) {
           label={searchLabel}
           fullWidth
           size="small"
+          value={searchWord}
+          onChange={(e) => setSearchWord(e.target.value)}
         />
       </Grid>
       <Grid item xs={2} md={1}>
@@ -23,6 +28,7 @@ export default function  SearchWindow(props) {
           color="primary"
           component="span"
           size="large"
+          onClick={() => searchArticle(searchWord)}
         >
           <SearchIcon />
         </Button>
