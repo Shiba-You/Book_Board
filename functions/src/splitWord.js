@@ -4,7 +4,7 @@ const biSplit = (word) => {
   let i = 0;
   const splitedWord = [];
   if (word.length <= 1) {
-    return word;
+    return [word];
   }
   while (i < word.length - 1) {
     splitedWord.push(word.slice(i, i + 2));
