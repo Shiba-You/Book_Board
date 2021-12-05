@@ -8,10 +8,11 @@ import Layout from '../components/template/layout';
 import FloatButton from '../components/FloatButton';
 import BottomPageNation from '../components/BottomPageNation';
 import Article from "../components/article";
+import SearchWindow from "../components/SearchWindow";
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginTop: 100,
+    marginTop: 30,
   },
 }));
 
@@ -24,6 +25,7 @@ export default function Mypage(props) {
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
+      <SearchWindow />
       <Grid container spacing={3} className={classes.root}>
         {(
           articles.map((article, i) => {

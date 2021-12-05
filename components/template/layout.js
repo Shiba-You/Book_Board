@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     width: '80%',
     minHeight: '900px',
-    marginTop: '48px',
+    marginTop: '148px',
     marginBottom: "48px"
   },
 }));
