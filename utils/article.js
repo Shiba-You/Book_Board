@@ -124,3 +124,7 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
   }
 };
 
+// mypage から記事の検索を行う
+export const searchArticle = (searchWord) => {
+  
+};
