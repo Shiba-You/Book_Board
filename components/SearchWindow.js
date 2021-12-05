@@ -5,12 +5,24 @@ import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 
-import { searchArticle } from ""
+// import { searchArticle } from ""
 
 export default function  SearchWindow(props) {
-  // const router = useRouter();
+  const router = useRouter();
   const searchLabel = "検索"
-  const [searchWord, setSearchWord] = useState("");
+  const [searchWord, setSearchWord] = useState(router.query.searchWord ? router.query.searchWord : "");
+
+  const searchArticle = async (e, page) => {
+    // const nextArticles = await getArticles(currentUser, page, PAGE_COUNT)
+    // setArticles(nextArticles)
+    router.push({
+      pathname: 'mypage/',
+      query: { 
+        page: router.query.page,
+        searchWord
+      }
+    })
+  };
 
   return (
     <Grid container justifyContent="flex-end">
@@ -28,7 +40,7 @@ export default function  SearchWindow(props) {
           color="primary"
           component="span"
           size="large"
-          onClick={() => searchArticle(searchWord)}
+          onClick={() => searchArticle()}
         >
           <SearchIcon />
         </Button>
