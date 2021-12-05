@@ -29,3 +29,16 @@ export const isObjEmpty = (obj) => {
 export const firebaseTimeToDate = (obj) => {
   return new Date(obj.updateAt.seconds*1e3  + obj.updateAt.nanoseconds/1e5)
 };
+
+export const biSplit = (word) => {
+  let i = 0;
+  const splitedWord = [];
+  if (word.length <= 1) {
+    return word;
+  }
+  while (i < word.length - 1) {
+    splitedWord.push(word.slice(i, i + 2));
+    i++;
+  }
+  return splitedWord;
+};
