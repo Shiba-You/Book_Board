@@ -9,7 +9,9 @@ export const getArticles = async (currentUser, page, articleCount, searchWord) =
   // 検索する際は searchWord を参照する
   if (searchWord) {
     const spliteSearchdWord = biSplit(searchWord)
-    articleRef = articleRef.where('splitedTitle', 'array-contains-any', spliteSearchdWord)
+    spliteSearchdWord.forEach((word) => {
+      articleRef = articleRef.where(`splitedTitle.${word}`, "==", true)
+    })
   }
 
   const limit = page * articleCount;
