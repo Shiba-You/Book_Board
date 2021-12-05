@@ -89,7 +89,6 @@ export const saveArticle = (title, content, currentUser, image) => {
       .set({
         thumbanil: storageUrl,
         title: title,
-        // splitedTitle: biSplit(title),
         user_uid: currentUser.uid,
         content: content,
         createAt: new Date(),
@@ -109,7 +108,6 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
       .doc(articleUid)
       .update({
         title: title,
-        // splitedTitle: biSplit(title),
         content: content,
         updateAt: new Date()
       }).then(() => {
@@ -123,7 +121,6 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
         .update({
           thumbanil: storageUrl,
           title: title,
-          // splitedTitle: biSplit(title),
           content: content,
           updateAt: new Date()
         });
