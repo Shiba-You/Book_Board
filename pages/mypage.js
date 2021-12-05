@@ -25,7 +25,7 @@ export default function Mypage(props) {
   return(
   <>
     <Layout title={title} currentUser={currentUser}>
-      <SearchWindow />
+      <SearchWindow currentUser={currentUser} setArticles={setArticles} />
       <Grid container spacing={3} className={classes.root}>
         {(
           articles.map((article, i) => {

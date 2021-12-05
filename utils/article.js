@@ -3,8 +3,15 @@ import { makeRnd, firebaseTimeToDate, biSplit } from './main';
 import { alertAndRedirect } from './info';
 
 // ログインユーザーのArticle一覧を取得
-export const getArticles = async (currentUser, page, articleCount) => {
-  const articleRef = db.collection('version/1/articles');
+export const getArticles = async (currentUser, page, articleCount, searchWord) => {
+  let articleRef = db.collection('version/1/articles');
+
+  // 検索する際は searchWord を参照する
+  if (searchWord) {
+    const spliteSearchdWord = biSplit(searchWord)
+    articleRef = articleRef.where('splitedTitle', 'array-contains-any', spliteSearchdWord)
+  }
+
   const limit = page * articleCount;
   const docs = []
   let limitIndex = 0
@@ -82,7 +89,7 @@ export const saveArticle = (title, content, currentUser, image) => {
       .set({
         thumbanil: storageUrl,
         title: title,
-        splitedTitle: biSplit(title),
+        // splitedTitle: biSplit(title),
         user_uid: currentUser.uid,
         content: content,
         createAt: new Date(),
@@ -102,7 +109,7 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
       .doc(articleUid)
       .update({
         title: title,
-        splitedTitle: biSplit(title),
+        // splitedTitle: biSplit(title),
         content: content,
         updateAt: new Date()
       }).then(() => {
@@ -116,7 +123,7 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
         .update({
           thumbanil: storageUrl,
           title: title,
-          splitedTitle: biSplit(title),
+          // splitedTitle: biSplit(title),
           content: content,
           updateAt: new Date()
         });
@@ -125,9 +132,4 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
       alertAndRedirect(msg, `/articles/${articleUid}`)
     })
   }
-};
-
-// mypage から記事の検索を行う
-export const searchArticle = (searchWord) => {
-  
 };

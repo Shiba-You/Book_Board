@@ -5,16 +5,19 @@ import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 
-// import { searchArticle } from ""
+import { getArticles } from "../utils/article";
 
 export default function  SearchWindow(props) {
+  const { currentUser, setArticles } = props;
   const router = useRouter();
   const searchLabel = "検索"
   const [searchWord, setSearchWord] = useState(router.query.searchWord ? router.query.searchWord : "");
 
+  const PAGE_COUNT = 3
+
   const searchArticle = async (e, page) => {
-    // const nextArticles = await getArticles(currentUser, page, PAGE_COUNT)
-    // setArticles(nextArticles)
+    const nextArticles = await getArticles(currentUser, router.query.page, PAGE_COUNT, searchWord)
+    setArticles(nextArticles)
     router.push({
       pathname: 'mypage/',
       query: { 

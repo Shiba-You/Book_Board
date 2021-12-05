@@ -24,7 +24,7 @@ export default function  BottomPageNation(props) {
   useEffect(() => {
     const f = async () => {
       const [articles, pageCount] = await Promise.all([
-        getArticles(currentUser, Number(router.query.page), PAGE_COUNT),
+        getArticles(currentUser, Number(router.query.page), PAGE_COUNT, router.query.searchWord),
         getPageCount(currentUser, PAGE_COUNT)
       ])
       setArticles(articles)
@@ -34,7 +34,7 @@ export default function  BottomPageNation(props) {
   }, []);
 
   const handleChange = async (e, page) => {
-    const nextArticles = await getArticles(currentUser, page, PAGE_COUNT)
+    const nextArticles = await getArticles(currentUser, page, PAGE_COUNT, router.query.searchWord)
     setArticles(nextArticles)
     router.push({
       pathname: 'mypage/',
