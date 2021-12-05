@@ -124,14 +124,3 @@ export const editArticle = (articleUid, title, content, currentUser, image) => {
   }
 };
 
-// page移動に伴うパラメータの変更
-const getQueryParam = (pageDif) => {
-  if (pageDif == 0) {
-    return [1, "desc", {"seconds": 0, "nanoseconds": 0}]
-  } else if (pageDif < 0) {
-    return [Math.abs(pageDif), "asc", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('fAt'))))]
-  } else {
-    return [pageDif, "desc", timestamp.fromDate(new Date(JSON.parse(sessionStorage.getItem('lAt'))))]
-  }
-}
-
