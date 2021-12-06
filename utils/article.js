@@ -4,25 +4,25 @@ import { alertAndRedirect } from './info';
 
 // ログインユーザーのArticle一覧を取得
 export const getArticles = async (currentUser, page, articleCount, searchWord) => {
-  let articleRef = db.collection('version/1/articles');
-
-  // 検索する際は searchWord を参照する
-  if (searchWord) {
-    const spliteSearchdWord = biSplit(searchWord)
-    spliteSearchdWord.forEach((word) => {
-      articleRef = articleRef.where(`splitedTitle.${word}`, "==", true)
-    })
-  }
+  const articleRef = db.collection('version/1/articles');
+  let currentUserArticleRef = articleRef.where('user_uid', '==', currentUser.uid)
 
   const limit = page * articleCount;
   const docs = []
   let limitIndex = 0
 
-  const snapshot = await articleRef
-    .where('user_uid', '==', currentUser.uid)
-    .orderBy("updateAt", "desc")
-    .limit(limit)
-    .get()
+  // 検索する際は searchWord を参照する
+  if (searchWord) {
+    const spliteSearchdWord = biSplit(searchWord)
+    spliteSearchdWord.forEach((word) => {
+      currentUserArticleRef = currentUserArticleRef.where(`splitedTitle.${word}`, "==", true)
+    })
+  } else {
+    console.log("aa")
+    currentUserArticleRef = currentUserArticleRef.orderBy("updateAt", "desc").limit(limit)
+  }
+
+  const snapshot = await currentUserArticleRef.get()
 
   snapshot.forEach(doc => {
     limitIndex += 1
