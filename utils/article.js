@@ -18,7 +18,6 @@ export const getArticles = async (currentUser, page, articleCount, searchWord) =
       currentUserArticleRef = currentUserArticleRef.where(`splitedTitle.${word}`, "==", true)
     })
   } else {
-    console.log("aa")
     currentUserArticleRef = currentUserArticleRef.orderBy("updateAt", "desc").limit(limit)
   }
 
